@@ -8,24 +8,28 @@ project('macOpenGL', ['cpp','c'],
 project_dir = meson.current_source_dir()
 
 inc = [include_directories('Libraries/include')]
-inc += project_dir / 'Libraries/lib'
+inc += './Libraries/lib'
 
 cpp = meson.get_compiler('cpp')
 c = meson.get_compiler('c')
 
-deps = []
-deps += cpp.find_library('glfw3dll', dirs : project_dir / 'Libraries/lib', static : true)
-deps += cpp.find_library('glfw3', dirs : project_dir / 'Libraries/lib', static : false)
-deps += cpp.find_library('glfw3', dirs : project_dir / 'Libraries/lib', static : true)
-deps += cpp.find_library('glfw3_mt', dirs : project_dir / 'Libraries/lib', static : true)
-
 source_files = ['main.cpp', 'glad.c']
 
-deps += declare_dependency(
-  dependencies : cpp.find_library('glfw3', dirs : project_dir / 'Libraries/lib', static : false),
-  include_directories : include_directories(project_dir / 'Libraries/include'))
+deps = []
 
+host_system = host_machine.system()
+if host_system == 'windows'
+  deps += cpp.find_library('glfw3dll', dirs : project_dir / 'Libraries/lib', static : true)
+  deps += cpp.find_library('glfw3', dirs : project_dir / 'Libraries/lib', static : false)
+  deps += cpp.find_library('glfw3', dirs : project_dir / 'Libraries/lib', static : true)
+  deps += cpp.find_library('glfw3_mt', dirs : project_dir / 'Libraries/lib', static : true)
 
+  deps += declare_dependency(
+    dependencies : cpp.find_library('glfw3', dirs : project_dir / 'Libraries/lib', static : false),
+    include_directories : include_directories(project_dir / 'Libraries/include'))
+elif host_system == 'darwin'
+  deps += cpp.find_library('libglfw.3.3', dirs : project_dir + '/Libraries/lib', static : false)
+endif
 
 exe = executable('macOpenGL', source_files,
     include_directories : inc,
