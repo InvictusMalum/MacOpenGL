@@ -27,11 +27,15 @@ if host_system == 'windows'
   deps += declare_dependency(
     dependencies : cpp.find_library('glfw3', dirs : project_dir / 'Libraries/lib', static : false),
     include_directories : include_directories(project_dir / 'Libraries/include'))
+
 elif host_system == 'darwin'
   deps += cpp.find_library('libglfw.3.3', dirs : project_dir + '/Libraries/lib', static : false)
+
+elif host_system == 'linux'
+  deps += cpp.find_library('glfw', dirs : project_dir / 'Libraries/lib')
 endif
 
 exe = executable('macOpenGL', source_files,
     include_directories : inc,
     dependencies : deps)
-    #link_with : links)
+    #link_with : links) 
