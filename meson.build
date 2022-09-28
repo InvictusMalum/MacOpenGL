@@ -7,13 +7,13 @@ project('OpenGL', ['cpp','c'],
 
 project_dir = meson.current_source_dir()
 
-inc = [include_directories('Libraries/include')]
+inc = [include_directories('Libraries/include'), include_directories('include')]
 inc += './Libraries/lib'
 
 cpp = meson.get_compiler('cpp')
 c = meson.get_compiler('c')
 
-source_files = ['main.cpp', 'glad.c']
+source_files = ['main.cpp', 'glad.c', 'source/shader.cpp']
 
 deps = []
 
