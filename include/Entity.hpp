@@ -28,16 +28,17 @@ namespace gl {
         public:
         EntityLink(Entity* entity);
         
-
         EntityLink* next() {return next_;}
         EntityLink* setNext(EntityLink* link);
         EntityLink* last() {return last_;}
         EntityLink* setLast(EntityLink* link);
 
-        void pushFront(EntityList* list);
-        void pushBack(EntityList* list);
-        bool sendForward(size_t n=1);
-        bool sendBacward(size_t n=1);
+        void breakFromList();
+
+        bool pushFront(EntityList* list);
+        bool pushBack(EntityList* list);
+        bool moveForward(size_t n=1);
+        bool moveBacward(size_t n=1);
     };
 
     class EntityList {
