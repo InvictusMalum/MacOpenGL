@@ -5,18 +5,14 @@ namespace gl {
     class Entity {
         EntityLink* link_;
 
-        glm::vec2 pos_;
-        float rotation_;
-        glm::vec2 scale_;
-
         public:
 
-        virtual void update()=0;
-        virtual void display()=0;
-        virtual glm::vec2 hitBox()=0;
-        virtual glm::vec2 position() {return pos_;}
-        virtual float rotation() {return rotation_;}
-        virtual glm::vec2 scale() {return scale_;}
+        // virtual void update()=0;
+        virtual void render()=0;
+        // virtual glm::vec2 hitBox()=0;
+        // virtual glm::vec2 position() {return pos_;}
+        // virtual float rotation() {return rotation_;}
+        // virtual glm::vec2 scale() {return scale_;}
 
     };
 
@@ -60,7 +56,7 @@ namespace gl {
             appendBack(new EntityLink(entity));
         }
 
-        void display();
+        void render();
         void update();
     };
 
