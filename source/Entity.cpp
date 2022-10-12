@@ -102,7 +102,7 @@ namespace gl {
 
     }
 
-    void EntityList::display() {
+    void EntityList::render() {
 
     }
     void EntityList::update() {
