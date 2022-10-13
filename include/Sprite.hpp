@@ -4,15 +4,23 @@
 namespace gl {
 
 
-    class SpriteRender {
+    class SpriteRenderer {
         Shader shader_;
+        unsigned int VAO_;
+
+        public:
+
+        SpriteRenderer(Shader shader);
+        ~SpriteRenderer();
+
+        void render(glm::vec2 size_, glm::vec2 position_,
+                glm::vec2 scale_, float rotate_);
         
     };
 
     class Sprite : public Entity {
 
-        Shader shader_;
-        unsigned int VAO_;
+        SpriteRenderer* renderer_; 
 
         glm::vec2 position_, scale_;
         float rotate_;
@@ -20,8 +28,8 @@ namespace gl {
 
         public:
 
-        Sprite();
-        ~Sprite();
+        Sprite(SpriteRenderer* renderer);
+        ~Sprite() {}
 
 
         void render();

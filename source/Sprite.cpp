@@ -7,8 +7,9 @@
 
 namespace gl {
 
-
-    Sprite::Sprite() {
+    SpriteRenderer::SpriteRenderer(Shader shader) :
+        shader_(shader)
+    {
         // configure VAO/VBO
         unsigned int VBO;
         float vertices[] = { 
@@ -34,22 +35,18 @@ namespace gl {
         glBindBuffer(GL_ARRAY_BUFFER, 0);  
         glBindVertexArray(0);
     }
-    Sprite::~Sprite() {
 
-    }
-
-
-    void Sprite::render() {
+    void SpriteRenderer::render(glm::vec2 size, glm::vec2 position,
+                glm::vec2 scale, float rotate) {
         // prepare transformations
         shader_.use();
-        glm::mat4 model = glm::mat4(1.0f);
-        
 
-        model = glm::scale(model, glm::vec3(size_, 1.0f));
-        model = glm::scale(model, glm::vec3(scale_, 1.0f));
-        model = glm::rotate(model, glm::radians(rotate_),
+        glm::mat4 model = glm::mat4(1.0f);
+        model = glm::scale(model, glm::vec3(size, 1.0f));
+        model = glm::scale(model, glm::vec3(scale, 1.0f));
+        model = glm::rotate(model, glm::radians(rotate),
             glm::vec3(0.0f, 0.0f, 1.0f));
-        model = glm::translate(model, glm::vec3(position_, 0.0f));  
+        model = glm::translate(model, glm::vec3(position, 0.0f));  
     
         shader_.setMat4("model", model);
     
@@ -59,6 +56,17 @@ namespace gl {
         glBindVertexArray(this->VAO_);
         glDrawArrays(GL_TRIANGLES, 0, 6);
         glBindVertexArray(0);
+    }
+
+
+    Sprite::Sprite(SpriteRenderer* renderer) :
+        size_(0.3,0.2), position_(0,0), rotate_(0),
+        scale_(1,1), renderer_(renderer)
+    {}
+
+
+    void Sprite::render() {
+        renderer_->render(size_, position_, scale_, rotate_);
     }  
     // virtual void update()=0;
 

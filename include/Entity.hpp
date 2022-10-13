@@ -2,6 +2,10 @@
 
 namespace gl {
 
+    class Entity;
+    class EntityLink;
+    class EntityList;
+
     class Entity {
         EntityLink* link_;
 

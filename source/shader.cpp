@@ -11,6 +11,7 @@ namespace gl {
     }
 
 
+
     unsigned int Shader::compileVertexShader(const char* vertexSource) {
         unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
 
@@ -72,12 +73,6 @@ namespace gl {
     }
 
 
-    // activate the shader
-    // ------------------------------------------------------------------------
-    void Shader::use() 
-    { 
-        glUseProgram(id_); 
-    }
     // utility uniform functions
     // ------------------------------------------------------------------------
     void Shader::setBool(const std::string &name, bool value) const {

@@ -13,7 +13,8 @@ namespace gl {
 
         Shader() {}
         Shader(const char* vertexSource, const char* fragmentSource);
-        ~Shader();
+        ~Shader() {}
+        
 
         private:
         

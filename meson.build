@@ -13,7 +13,7 @@ inc += './Libraries/lib'
 cpp = meson.get_compiler('cpp')
 c = meson.get_compiler('c')
 
-source_files = ['main.cpp', 'glad.c', 'source/shader.cpp']
+source_files = ['main.cpp', 'glad.c', 'source/shader.cpp', 'source/Entity.cpp', 'source/Sprite.cpp']
 
 deps = []
 

@@ -38,7 +38,7 @@ namespace gl {
         list->appendFront(this);
     }
 
-    bool EntityLink::moveForward(size_t n=1) {
+    bool EntityLink::moveForward(size_t n) {
         if (!last_ || !n) return !(bool)n;
         EntityLink* link = last_;
         breakFromList();
@@ -60,7 +60,7 @@ namespace gl {
         return !(i < n);
     }
 
-    bool EntityLink::moveBacward(size_t n=1) {
+    bool EntityLink::moveBacward(size_t n) {
         if (!next_ || !n) return !(bool)n;
         EntityLink* link = next_;
         breakFromList();
