@@ -27,6 +27,7 @@ namespace gl {
 
         public:
         EntityLink(Entity* entity);
+        ~EntityLink();
         
         EntityLink* next() {return next_;}
         EntityLink* setNext(EntityLink* link);

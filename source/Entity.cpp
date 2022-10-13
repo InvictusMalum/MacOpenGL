@@ -7,6 +7,11 @@ namespace gl {
         next_(nullptr), last_(nullptr), entity_(entity)
     {}
 
+    EntityLink::~EntityLink() {
+        if(entity)
+            delete entity_;
+    }
+
     EntityLink* EntityLink::setNext(EntityLink* link) {
         EntityLink* tmp = next_;
         next_ = link;
@@ -44,17 +49,14 @@ namespace gl {
         breakFromList();
         size_t i = 1;
         while (i < n) {
-            if (!link->last()) break;
+            if (!link->last()->last()) break;
             link = link->last(); 
             i++;
         }
 
         // Insert Link
-        if (link->last()) {
-            link->last()->setNext(this);
-            last_ = link->last();
-        } else 
-            last_ = nullptr;
+        link->last()->setNext(this);
+        last_ = link->last();
         link->setLast(this);
         next_ = link;
         return !(i < n);
@@ -66,47 +68,59 @@ namespace gl {
         breakFromList();
         size_t i = 1;
         while (i < n) {
-            if (!link->next()) break;
+            if (!link->next()->next()) break;
             link = link->next(); 
             i++;
         }
 
-        // if (i < n) {
-
-        // }
-
         // Insert Link
-        if (link->next()) {
-            link->next()->setNext(this);
-            next_ = link->next();
-        } else 
-            next_ = nullptr;
+        link->next()->setLast(this);
+        next_ = link->next();
         link->setNext(this);
         last_ = link;
         return !(i < n);
     }
 
 
-    EntityList::EntityList() {
-        
+    EntityList::EntityList() :
+        front_(new EntityLink(nullptr)),
+        back_(new EntityLink(nullptr))
+    {
+        front_->setNext(back_);
+        back_->setBack(next_);
     }
     EntityList::~EntityList() {
-
+        EntityLink* link;
+        for (link = front_; link; link = link->next()) {
+            delete link;
+        }
     }
 
     void EntityList::appendFront(EntityLink* entity) {
-
+        front_->next()->setLast(entity);
+        entity->setNext(front_->next());
+        front_->setNext(entity);
+        entity->setLast(front_);
     }
 
     void EntityList::appendBack(EntityLink* entity) {
-
+        back_->last()->setNext(entity);
+        entity->setlast(back_->last());
+        back_->setlast(entity);
+        entity->setNext(back_);
     }
 
     void EntityList::render() {
-
+        for (EntityLink* link = front_->next(); link->next();
+                link = link->next()) {
+            link->entity()->render();
+        }
     }
     void EntityList::update() {
-
+        for (EntityLink* link = front_->next(); link->next();
+                link = link->next()) {
+            link->entity()->update();
+        }
     }
 
 
