@@ -24,7 +24,7 @@ namespace gl {
         public:
         Window(int width, int height, WindowType type, int windowWidth = 0,
                     int windowHeight = 0, const char* title = "",
-                    void (*key_callback)(GLFWwindow* window, int key, int scancode, int action, int mods) = nullptr);
+                    void (*key_callback)(GLFWwindow*,int,int,int,int) = nullptr);
         
         void scale(int width, int height);
         void processInput();

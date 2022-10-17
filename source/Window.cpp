@@ -23,7 +23,7 @@ namespace gl {
 
         Window::Window(int width, int height, WindowType type, int windowWidth,
                 int windowHeight, const char* title, void (*key_callback)
-                (GLFWwindow* window, int key, int scancode, int action, int mods)) :
+                (GLFWwindow*,int,int,int,int)) :
             type_(type), width_(width), height_(height), winWidth_(windowWidth), winHeight_(windowHeight)
         {
             if (!winWidth_) winWidth_ = width_;
@@ -37,6 +37,7 @@ namespace gl {
 
 
             if (key_callback)
+
 
 
         }
