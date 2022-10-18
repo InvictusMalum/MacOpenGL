@@ -3,6 +3,8 @@
 #include <GLFW/glfw3.h>
 
 namespace gl {
+    
+
     class Window {
         public:
         enum WindowType {
@@ -17,7 +19,7 @@ namespace gl {
         WindowType type_;
         int width_, height_;
         int winWidth_, winHeight_;
-        float ration_;
+        float ratio_;
 
         void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 

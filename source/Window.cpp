@@ -17,9 +17,14 @@ namespace gl {
         // int winWidth_, winHeight_;
         // float ratio_
 
+        template<auto& v, auto f>
+        constexpr auto member_callback = [](auto... args) { (v.*f)(args...); };
+
         // Callback for adjusting view window size
         void Window::framebuffer_size_callback(GLFWwindow* window, int width, int height) {
-            glViewport(0, 0, width, height);
+            winHeight_ = height;
+            winWidth_ = width;
+            glViewport(0, 0, winWidth_, winHeight_);
         }
 
         Window::Window(int width, int height, WindowType type, int windowWidth,
@@ -34,24 +39,24 @@ namespace gl {
                 throw std::runtime_error("Failed To Create GLFW Window");
 
             glfwMakeContextCurrent(window_);
-            glfwSetFramebufferSizeCallback(window_, framebuffer_size_callback);
+            glfwSetFramebufferSizeCallback(window_, &framebuffer_size_callback);
 
             if (key_callback)
-                glfwSetKeyCallback(window, key_callback);
+                glfwSetKeyCallback(window_, key_callback);
         }
         
         void Window::setDimensions(int width, int height) {
             // Manually run callback function to adjust sizing of the view port
             // UNTESTED IF WORKS PROPERLY
-            framebuffer_size_callback(width, height);
+            framebuffer_size_callback(window_, width, height);
         }
         void Window::swapBuffers() {
             glfwSwapBuffers(window_);
         }
         bool Window::shouldClose() {
-            glfwWindowShouldClose(window_)
+            return glfwWindowShouldClose(window_);
         }
-        void setWindowShouldClose(bool state) {
+        void Window::setWindowShouldClose(bool state) {
             glfwSetWindowShouldClose(window_, state);
         }
 
