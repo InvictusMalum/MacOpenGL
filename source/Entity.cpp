@@ -8,7 +8,7 @@ namespace gl {
     {}
 
     EntityLink::~EntityLink() {
-        if(entity)
+        if(entity_)
             delete entity_;
     }
 
@@ -84,10 +84,10 @@ namespace gl {
 
     EntityList::EntityList() :
         front_(new EntityLink(nullptr)),
-        back_(new EntityLink(nullptr))
+        last_(new EntityLink(nullptr))
     {
-        front_->setNext(back_);
-        back_->setBack(next_);
+        front_->setNext(last_);
+        last_->setLast(front_);
     }
     EntityList::~EntityList() {
         EntityLink* link;
@@ -104,10 +104,10 @@ namespace gl {
     }
 
     void EntityList::appendBack(EntityLink* entity) {
-        back_->last()->setNext(entity);
-        entity->setlast(back_->last());
-        back_->setlast(entity);
-        entity->setNext(back_);
+        last_->last()->setNext(entity);
+        entity->setLast(last_->last());
+        last_->setLast(entity);
+        entity->setNext(last_);
     }
 
     void EntityList::render() {

@@ -1,18 +1,27 @@
-#include <glm/glm.hpp>
+#pragma once
+
+#include "gl.hpp"
+
+namespace gl{
+class Entity;
+class EntityLink;
+class EntityList;
+}
+
+#include <Game.hpp>
+
 
 namespace gl {
 
-    class Entity;
-    class EntityLink;
-    class EntityList;
 
     class Entity {
         EntityLink* link_;
 
         public:
 
-        // virtual void update()=0;
-        virtual void render()=0;
+        virtual void init(GameData* gameData) {}
+        virtual void update(GameData* gameData) {};
+        virtual void render() {};
         // virtual glm::vec2 hitBox()=0;
         // virtual glm::vec2 position() {return pos_;}
         // virtual float rotation() {return rotation_;}
@@ -28,6 +37,8 @@ namespace gl {
         public:
         EntityLink(Entity* entity);
         ~EntityLink();
+
+        Entity* entity() {return entity_;}
         
         EntityLink* next() {return next_;}
         EntityLink* setNext(EntityLink* link);

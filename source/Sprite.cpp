@@ -4,6 +4,7 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <math.h>
 
 namespace gl {
 
@@ -36,7 +37,7 @@ namespace gl {
         glBindVertexArray(0);
     }
 
-    void SpriteRenderer::render(glm::vec2 size, glm::vec2 position,
+    void SpriteRenderer::render(glm::vec2 size, uint32_t position_[2],
                 glm::vec2 scale, float rotate) {
         // prepare transformations
         shader_.use();
@@ -46,7 +47,7 @@ namespace gl {
         model = glm::scale(model, glm::vec3(scale, 1.0f));
         model = glm::rotate(model, glm::radians(rotate),
             glm::vec3(0.0f, 0.0f, 1.0f));
-        model = glm::translate(model, glm::vec3(position, 0.0f));  
+        // model = glm::translate(model, glm::vec3(position_, 0.0f));  
     
         shader_.setMat4("model", model);
     
@@ -60,9 +61,33 @@ namespace gl {
 
 
     Sprite::Sprite(SpriteRenderer* renderer) :
-        size_(0.3,0.2), position_(0,0), rotate_(0),
+        size_(0.3,0.2), position_{0,0}, rotate_(0),
         scale_(1,1), renderer_(renderer)
     {}
+
+
+    void Sprite::moveTo(uint32_t xPos, uint32_t yPos) {
+        position_[0] = xPos;
+        position_[1] = yPos;
+    }
+    void Sprite::move(uint32_t xPos, uint32_t yPos) {
+        position_[0] += xPos;
+        position_[1] += yPos;   
+    }
+
+    void Sprite::setRotation(float rotation) {
+        rotate_ = rotation;
+    }
+    void Sprite::rotate(float rotation) {
+        rotate_ = fmod(rotate_+rotation, 360);
+    }
+
+    void Sprite::setScale(float xScale, float yScale) {
+        scale_ = {xScale, yScale};
+    }
+    void Sprite::scale(float xScale, float yScale) {
+
+    }
 
 
     void Sprite::render() {

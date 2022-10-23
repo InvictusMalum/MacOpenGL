@@ -1,6 +1,10 @@
 #pragma once
 
-#include <GLFW/glfw3.h>
+#include "gl.hpp"
+
+namespace gl{
+class Window;
+}
 
 namespace gl {
     
@@ -17,14 +21,12 @@ namespace gl {
         private:
         GLFWwindow* window_;
         WindowType type_;
-        int width_, height_;
         int winWidth_, winHeight_;
         float ratio_;
 
-        void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
         public:
-        Window(int width, int height, WindowType type, int windowWidth = 0,
+        Window(WindowType type, int windowWidth = 0,
                     int windowHeight = 0, const char* title = "",
                     void (*key_callback)(GLFWwindow*,int,int,int,int) = nullptr);
         

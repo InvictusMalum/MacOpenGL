@@ -1,7 +1,11 @@
+#pragma once
 
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
+#include "gl.hpp"
+
+namespace gl{
+class Shader;
+}
+
 #include <string>
 
 namespace gl {

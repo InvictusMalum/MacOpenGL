@@ -1,3 +1,12 @@
+#pragma once
+
+#include "gl.hpp"
+
+namespace gl{
+class SpriteRender;
+class Sprite;
+}
+
 #include <Entity.hpp>
 #include <shader.hpp>
 
@@ -13,7 +22,7 @@ namespace gl {
         SpriteRenderer(Shader shader);
         ~SpriteRenderer();
 
-        void render(glm::vec2 size_, glm::vec2 position_,
+        void render(glm::vec2 size_, uint32_t position_[2],
                 glm::vec2 scale_, float rotate_);
         
     };
@@ -22,7 +31,8 @@ namespace gl {
 
         SpriteRenderer* renderer_; 
 
-        glm::vec2 position_, scale_;
+        uint32_t position_[2];
+        glm::vec2 scale_;
         float rotate_;
         glm::vec2 size_;
 
@@ -31,9 +41,18 @@ namespace gl {
         Sprite(SpriteRenderer* renderer);
         ~Sprite() {}
 
+        void moveTo(uint32_t xPos, uint32_t yPos);
+        void move(uint32_t xPos, uint32_t yPos);
+
+        void setRotation(float rotation);
+        void rotate(float rotation);
+
+        void setScale(float xScale, float yScale);
+        void scale(float xScale, float yScale);
 
         void render();
-        // virtual void update()=0;
+        virtual void init() {};
+        virtual void update() {};
 
     };
 
