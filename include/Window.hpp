@@ -10,28 +10,7 @@ class Window;
 
 namespace gl {
 
-    class WindowRegistry {
-        using Window::framebuffer_size_callback framebufferCallback;
-        
-        std::map<GLFWwidow*, Window*>
-            windowMap_;
-        
-        public:
-        
-        WindowRegistry() {}
-        ~WindowRegistry() {}
-
-        protected:
-
-        bool registerWindow(GLFWwindow* glfwWindow, Window* window);
-        void unregisterWindow(GLFWwindow* glfwWindow);
-        Window* getWindow(GLFWwindow* window) {return windowMap_[window];}
-
-        private:
-
-        static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-
-    };
+    
     
 
     class Window {
@@ -48,7 +27,7 @@ namespace gl {
         WindowType type_;
         int winWidth_, winHeight_;
         float ratio_;
-        glm::mat4 screenModel; // Transforms point on game field to point on screen
+        glm::mat4 screenModel_; // Transforms point on game field to point on screen
 
         public:
         Window(WindowType type, int windowWidth = 0,
@@ -63,7 +42,7 @@ namespace gl {
         
 
         // Callbacks
-        void framebuffer_size_callback(int width, int height)
+        void framebuffer_size_callback(int width, int height);
         
         void setDimensions(int width, int height);
         void processInput();
@@ -71,4 +50,6 @@ namespace gl {
         bool shouldClose();
         void setWindowShouldClose(bool state);
     };
+
+    
 }

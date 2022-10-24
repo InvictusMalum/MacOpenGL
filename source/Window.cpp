@@ -5,7 +5,28 @@
 
 namespace gl {
 
-    WindowRegistry g_windowRegistry();
+    
+
+    class WindowRegistry {
+        
+        std::map<GLFWwindow*, Window*>
+            windowMap_;
+        
+        public:
+        
+        WindowRegistry() {}
+        ~WindowRegistry() {}
+
+        bool registerWindow(GLFWwindow* glfwWindow, Window* window);
+        void unregisterWindow(GLFWwindow* glfwWindow);
+        Window* getWindow(GLFWwindow* window) {return windowMap_[window];}
+
+        private:
+
+        static void framebuffer_size_central_callback
+                (GLFWwindow* window, int width, int height);
+    
+    } g_windowRegistry;
 
     bool WindowRegistry::registerWindow(GLFWwindow* glfwWindow,
                                         Window* window) {
@@ -13,7 +34,7 @@ namespace gl {
                 windowMap_[glfwWindow])
             return false;
         glfwSetFramebufferSizeCallback(glfwWindow,
-            WindowRegistry::framebuffer_size_callback);
+            WindowRegistry::framebuffer_size_central_callback);
 
         windowMap_[glfwWindow] = window;
         return true;
@@ -23,10 +44,13 @@ namespace gl {
         windowMap_[glfwWindow] = nullptr;
     }
 
-    static void WindowRegistry::framebuffer_size_callback
+    void WindowRegistry::framebuffer_size_central_callback
             (GLFWwindow* window, int width, int height) {
-        windowMap_[window].framebufferCallback(width, height)
+        g_windowRegistry.windowMap_[window]->
+                framebuffer_size_callback(width, height);
     }
+
+
 
 
     Window::Window(WindowType type, int windowWidth,
@@ -37,6 +61,11 @@ namespace gl {
         window_ = glfwCreateWindow(winWidth_, winHeight_, title, nullptr, nullptr);
         if (window_ == nullptr)
             throw std::runtime_error("Failed To Create GLFW Window");
+        
+        // If window mode is static then 
+        if (type_ == WindowType::static_window)
+            glfwSetWindowSizeLimits(window_, winWidth_, winHeight_,
+                                    GLFW_DONT_CARE, GLFW_DONT_CARE);
 
         // Register window with global registry so this class 
         // recieves callbacks from them.
@@ -44,15 +73,25 @@ namespace gl {
 
         glfwMakeContextCurrent(window_);
 
+        
+
+
         // if (key_callback)
         //     glfwSetKeyCallback(window_, key_callback);
         
     }
 
     void Window::adjustModel() {
-        screenModel_ = {0};
+        screenModel_ = {};
         switch (type_) {
-            case stretch_window:
+            case WindowType::static_window:
+                break;
+            case WindowType::stretch_window:
+                break;
+            case WindowType::scale_window:
+                break;
+            case WindowType::dynamic_window:
+                break;
                 
         }
     }
@@ -67,7 +106,7 @@ namespace gl {
     void Window::setDimensions(int width, int height) {
         // Manually run callback function to adjust sizing of the view port
         // UNTESTED IF WORKS PROPERLY
-        framebuffer_size_callback(window_, width, height);
+        framebuffer_size_callback(width, height);
     }
     void Window::swapBuffers() {
         glfwSwapBuffers(window_);
