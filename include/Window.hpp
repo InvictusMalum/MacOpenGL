@@ -48,11 +48,19 @@ namespace gl {
         WindowType type_;
         int winWidth_, winHeight_;
         float ratio_;
+        glm::mat4 screenModel; // Transforms point on game field to point on screen
 
         public:
         Window(WindowType type, int windowWidth = 0,
                     int windowHeight = 0, const char* title = "",
                     void (*key_callback)(GLFWwindow*,int,int,int,int) = nullptr);
+
+        private:
+
+        void adjustModel(); // Set sceenModel to proper transform
+
+        public:
+        
 
         // Callbacks
         void framebuffer_size_callback(int width, int height)

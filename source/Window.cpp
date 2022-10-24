@@ -9,10 +9,12 @@ namespace gl {
 
     bool WindowRegistry::registerWindow(GLFWwindow* glfwWindow,
                                         Window* window) {
-        if (glfwWindow && window &&
+        if (!glfwWindow || !window ||
                 windowMap_[glfwWindow])
             return false;
-        
+        glfwSetFramebufferSizeCallback(glfwWindow,
+            WindowRegistry::framebuffer_size_callback);
+
         windowMap_[glfwWindow] = window;
         return true;
     }
@@ -21,7 +23,7 @@ namespace gl {
         windowMap_[glfwWindow] = nullptr;
     }
 
-    static void framebuffer_size_callback
+    static void WindowRegistry::framebuffer_size_callback
             (GLFWwindow* window, int width, int height) {
         windowMap_[window].framebufferCallback(width, height)
     }
@@ -41,15 +43,24 @@ namespace gl {
         g_windowRegistry.registerWindow(window_, this);
 
         glfwMakeContextCurrent(window_);
-        glfwSetFramebufferSizeCallback(window_, framebuffer_size_callback);
 
-        if (key_callback)
-            glfwSetKeyCallback(window_, key_callback);
+        // if (key_callback)
+        //     glfwSetKeyCallback(window_, key_callback);
         
+    }
+
+    void Window::adjustModel() {
+        screenModel_ = {0};
+        switch (type_) {
+            case stretch_window:
+                
+        }
     }
 
     // Callback for adjusting view window size
     void Window::framebuffer_size_callback(int width, int height) {
+        winWidth_ = width;
+        winHeight_ = height;
         glViewport(0, 0, width, height);
     }
     
