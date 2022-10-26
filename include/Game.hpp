@@ -41,14 +41,14 @@ namespace gl {
         EntityList entities_;
         Window* window_;
         uint32_t fps_;
-        int width_, height_;
+        uint16_t width_, height_;
         GameData gameData_;
 
         // CallbackMap<int,CallbackMap<int,CallbackMap<int>> keyCallbackMap_;
         
         public:
         
-        Game(uint32_t fps, uint32_t fieldWidth, uint32_t fieldHeight,
+        Game(uint32_t fps, uint16_t fieldWidth, uint16_t fieldHeight,
             const char* windowTitle = "", 
             Window::WindowType windowType = Window::static_window);
         ~Game();
@@ -57,7 +57,8 @@ namespace gl {
         // void bindKey(int scancode, int action, Callback callback);
         // void bindKey(int scancode, int action, int mod, Callback callback);
 
-
+        uint16_t fieldWidth() {return width_;}
+        uint16_t fieldHeight() {return height_;}
 
         void loadEntity(Entity* entity);
         void execute();

@@ -21,7 +21,7 @@ namespace gl {
 
         virtual void init(GameData* gameData) {}
         virtual void update(GameData* gameData) {};
-        virtual void render() {};
+        virtual void render(glm::mat4* windowModel) {};
         // virtual glm::vec2 hitBox()=0;
         // virtual glm::vec2 position() {return pos_;}
         // virtual float rotation() {return rotation_;}
@@ -72,8 +72,8 @@ namespace gl {
             appendBack(new EntityLink(entity));
         }
 
-        void render();
-        void update();
+        void render(glm::mat4* windowModel);
+        void update(GameData* gameData);
     };
 
 }

@@ -2,6 +2,7 @@
 #include <stdexcept>
 #include <functional>
 
+#include <glm/gtc/matrix_transform.hpp>
 
 namespace gl {
 
@@ -53,10 +54,11 @@ namespace gl {
 
 
 
-    Window::Window(WindowType type, int windowWidth,
-            int windowHeight, const char* title,
+    Window::Window(Game* game, WindowType type, uint16_t windowWidth,
+            uint16_t windowHeight, const char* title,
             void (*key_callback) (GLFWwindow*,int,int,int,int)) :
-        type_(type), winWidth_(windowWidth), winHeight_(windowHeight)
+        type_(type), game_(game), winWidth_(windowWidth),
+        winHeight_(windowHeight)
     {
         window_ = glfwCreateWindow(winWidth_, winHeight_, title, nullptr, nullptr);
         if (window_ == nullptr)
@@ -74,19 +76,21 @@ namespace gl {
         glfwMakeContextCurrent(window_);
 
         
-
-
-        // if (key_callback)
-        //     glfwSetKeyCallback(window_, key_callback);
-        
     }
 
     void Window::adjustModel() {
-        screenModel_ = {};
+        windowModel_ = {};
         switch (type_) {
             case WindowType::static_window:
                 break;
             case WindowType::stretch_window:
+                // Map to range 0 - 2 inclusive
+                windowModel_ = glm::scale(windowModel_,
+                    glm::vec3{1.0f/(game_->fieldWidth()-1)/2.0f,
+                    1.0f/(game_->fieldHeight()-1)/2.0f, 1.0f});
+                // Translate to range -1 - 1 inclusive
+                windowModel_ = glm::translate(windowModel_,
+                    glm::vec3{-1, -1, 0});
                 break;
             case WindowType::scale_window:
                 break;

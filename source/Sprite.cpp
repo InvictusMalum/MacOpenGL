@@ -37,7 +37,7 @@ namespace gl {
         glBindVertexArray(0);
     }
 
-    void SpriteRenderer::render(glm::vec2 size, uint32_t position_[2],
+    void SpriteRenderer::render(glm::vec2 size, uint16_t position_[2],
                 glm::vec2 scale, float rotate) {
         // prepare transformations
         shader_.use();
@@ -66,11 +66,11 @@ namespace gl {
     {}
 
 
-    void Sprite::moveTo(uint32_t xPos, uint32_t yPos) {
+    void Sprite::moveTo(uint16_t xPos, uint16_t yPos) {
         position_[0] = xPos;
         position_[1] = yPos;
     }
-    void Sprite::move(uint32_t xPos, uint32_t yPos) {
+    void Sprite::move(uint16_t xPos, uint16_t yPos) {
         position_[0] += xPos;
         position_[1] += yPos;   
     }
