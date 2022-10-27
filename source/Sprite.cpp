@@ -38,7 +38,7 @@ namespace gl {
     }
 
     void SpriteRenderer::render(glm::vec2 size, uint16_t position_[2],
-                glm::vec2 scale, float rotate) {
+                glm::vec2 scale, float rotate, glm::mat4 windowModel) {
         // prepare transformations
         shader_.use();
 
@@ -60,9 +60,14 @@ namespace gl {
     }
 
 
-    Sprite::Sprite(SpriteRenderer* renderer) :
+    Sprite::Sprite() :
         size_(0.3,0.2), position_{0,0}, rotate_(0),
-        scale_(1,1), renderer_(renderer)
+        scale_(1,1), game_(nullptr)
+    {}
+
+    Sprite::Sprite(Game* game) :
+        size_(0.3,0.2), position_{0,0}, rotate_(0),
+        scale_(1,1), game_(game)
     {}
 
 

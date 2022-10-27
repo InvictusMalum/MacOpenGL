@@ -7,16 +7,23 @@
 #include <iostream>
 
 
-class simpleSprite : public gl::Sprite {
+class SimpleSprite : public gl::Sprite {
 
-    void update(gl::GameData* gameData) {
-        
+    public:
+
+    SimpleSprite(gl::GameData* game) {
+        moveTo(game->width/2, game->height*2/3);
+    }
+
+    void update(gl::GameData* gameData) override {
+        return;
     }
 
 };
 
 int main() {
-    gl::Game game();
+    gl::Game game(24, 800, 900, "gl Library Test", gl::Window::stretch_window);
+    game.loadEntity(new SimpleSprite(game.data()));
 
     return 0;
 }

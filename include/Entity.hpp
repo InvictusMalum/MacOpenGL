@@ -19,7 +19,6 @@ namespace gl {
 
         public:
 
-        virtual void init(GameData* gameData) {}
         virtual void update(GameData* gameData) {};
         virtual void render(glm::mat4* windowModel) {};
         // virtual glm::vec2 hitBox()=0;
@@ -74,6 +73,9 @@ namespace gl {
 
         void render(glm::mat4* windowModel);
         void update(GameData* gameData);
+
+        template <typename... params>
+        void call(void (Entity::*method)(params...), params... args);
     };
 
 }

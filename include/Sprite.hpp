@@ -29,7 +29,7 @@ namespace gl {
 
     class Sprite : public Entity {
 
-        SpriteRenderer* renderer_; 
+        Game* game_; 
 
         uint16_t position_[2];
         glm::vec2 scale_;
@@ -38,8 +38,11 @@ namespace gl {
 
         public:
 
-        Sprite(SpriteRenderer* renderer);
+        Sprite();
+        Sprite(Game* game);
         ~Sprite() {}
+
+        void loadGame(Game* game) {game_ = game;}
 
         void moveTo(uint16_t xPos, uint16_t yPos);
         void move(uint16_t xPos, uint16_t yPos);

@@ -23,8 +23,8 @@ namespace gl {
     }
     void Game::execute() {
         while (!window_->shouldClose()) {
-            entities_.update(&gameData_);
             entities_.render(window_->windowModel());
+            entities_.update(&gameData_);
         }
     }
 

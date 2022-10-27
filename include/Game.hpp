@@ -59,6 +59,7 @@ namespace gl {
 
         uint16_t fieldWidth() {return width_;}
         uint16_t fieldHeight() {return height_;}
+        GameData* data() {return gameData_;}
 
         void loadEntity(Entity* entity);
         void execute();
