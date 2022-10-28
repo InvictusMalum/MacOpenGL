@@ -17,6 +17,19 @@ namespace gl {
         delete window_;
     }
 
+    template<typename T>
+    bool Game::loadRenderer(T* renderer) {
+        std::type_index index = typeid(renderer);
+        if (renderMap_[index]) return false;
+        renderMap_[index] = renderer;
+        return true;
+    }
+
+    template<typename T>
+    void* Game::renderer() {
+        return renderMap_[typeid(T)];
+    }
+
 
     void Game::loadEntity(Entity* entity) {
         entities_.appendFront(entity);

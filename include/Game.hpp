@@ -10,6 +10,9 @@ class GameData;
 #include <Window.hpp>
 #include <Entity.hpp>
 
+#include <map>
+#include <typeinfo>
+#include <typeindex> 
 
 namespace gl {
 
@@ -44,6 +47,9 @@ namespace gl {
         uint16_t width_, height_;
         GameData gameData_;
 
+        // Garantees pointer is to object of same type as index
+        std::map<std::type_index, void*> renderMap_;
+
         // CallbackMap<int,CallbackMap<int,CallbackMap<int>> keyCallbackMap_;
         
         public:
@@ -56,6 +62,37 @@ namespace gl {
         // void bindKey(int scancode, Callback callback);
         // void bindKey(int scancode, int action, Callback callback);
         // void bindKey(int scancode, int action, int mod, Callback callback);
+
+        template<typename T>
+        bool loadRenderer(T* renderer);
+
+        template<typename T>
+        bool loadRenderer();
+
+        template<typename T>
+        void* renderer();
+
+        // Remove renderer of type T from internal map
+        // Returns pointer if removed
+        // Returns nullptr if renderer of type T doesn't exist
+        template<typename T>
+        T* renderer removeRenderer(T* renderer);
+
+        // Remove renderer from internal map
+        // Returns pointer if removed
+        // Returns nullptr if renderer of type T doesn't exist
+        // or pointer doesn't match given renderer
+        template<typename T>
+        T* renderer removeRenderer(T* renderer);
+
+        // Removes and deletes renderer of given type
+        // from internal map
+        // Returns true if renderer of type T was delete\
+        // false if not found in map
+        template<typename T>
+        bool deleteRenderer();
+
+
 
         uint16_t fieldWidth() {return width_;}
         uint16_t fieldHeight() {return height_;}
