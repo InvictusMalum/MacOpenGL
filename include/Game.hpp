@@ -67,36 +67,40 @@ namespace gl {
         bool loadRenderer(T* renderer);
 
         template<typename T>
-        bool loadRenderer();
-
-        template<typename T>
-        void* renderer();
+        T* renderer();
 
         // Remove renderer of type T from internal map
         // Returns pointer if removed
         // Returns nullptr if renderer of type T doesn't exist
         template<typename T>
-        T* renderer removeRenderer(T* renderer);
+        T* removeRenderer();
 
         // Remove renderer from internal map
         // Returns pointer if removed
         // Returns nullptr if renderer of type T doesn't exist
-        // or pointer doesn't match given renderer
+        // or pointer doesn't match provided renderer
         template<typename T>
-        T* renderer removeRenderer(T* renderer);
+        T* removeRenderer(T* renderer);
+
+        // Removes and deletes renderer of given type
+        // from internal map
+        // Returns true if renderer of type T was delete
+        // false if not found in map
+        template<typename T>
+        bool deleteRenderer();
 
         // Removes and deletes renderer of given type
         // from internal map
         // Returns true if renderer of type T was delete\
         // false if not found in map
         template<typename T>
-        bool deleteRenderer();
+        bool deleteRenderer(T* renderer);
 
 
 
         uint16_t fieldWidth() {return width_;}
         uint16_t fieldHeight() {return height_;}
-        GameData* data() {return gameData_;}
+        const GameData& data() {return gameData_;}
 
         void loadEntity(Entity* entity);
         void execute();

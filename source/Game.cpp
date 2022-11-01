@@ -26,8 +26,58 @@ namespace gl {
     }
 
     template<typename T>
-    void* Game::renderer() {
-        return renderMap_[typeid(T)];
+    T* Game::renderer() {
+        return (T*)renderMap_[typeid(T)];
+    }
+
+    // Remove renderer of type T from internal map
+    // Returns pointer if removed
+    // Returns nullptr if renderer of type T doesn't exist
+    template<typename T>
+    T* Game::removeRenderer() {
+        if (!renderMap_[typeid(T)]) return nullptr;
+        T* tmpReturn = renderMap_[typeid(T)];
+        renderMap_.erase(typeid(T));
+        return tmpReturn;
+    }
+
+    // Remove renderer from internal map
+    // Returns pointer if removed
+    // Returns nullptr if renderer of type T doesn't exist
+    // or pointer doesn't match provided renderer
+    template<typename T>
+    T* Game::removeRenderer(T* renderer) {
+        if (!renderer || renderMap_[typeid(T)] != renderer)
+            return nullptr;
+        T* tmpReturn = renderMap_[typeid(T)];
+        renderMap_.erase(typeid(T));
+        return tmpReturn;
+    }
+
+    // Removes and deletes renderer of given type
+    // from internal map
+    // Returns true if renderer of type T was delete
+    // false if not found in map
+    template<typename T>
+    bool Game::deleteRenderer() {
+        T* tmpRenderer = renderMap_[typeid(T)]
+        if (!tmpRenderer) return nullptr;
+        delete tmpRenderer;
+        renderMap_.erase(typeid(T));
+        return true;
+    }
+
+    // Removes and deletes renderer of given type
+    // from internal map
+    // Returns true if renderer was delete
+    // false if not found in map
+    template<typename T>
+    bool Game::deleteRenderer(T* renderer) {
+        T* tmpRenderer = renderMap_[typeid(T)]
+        if (!tmpRenderer) return nullptr;
+        delete tmpRenderer;
+        renderMap_.erase(typeid(T));
+        return true;
     }
 
 

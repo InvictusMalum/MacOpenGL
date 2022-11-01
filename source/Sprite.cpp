@@ -62,12 +62,12 @@ namespace gl {
 
     Sprite::Sprite() :
         size_(0.3,0.2), position_{0,0}, rotate_(0),
-        scale_(1,1), game_(nullptr)
+        scale_(1,1), renderer_(nullptr)
     {}
 
     Sprite::Sprite(Game* game) :
         size_(0.3,0.2), position_{0,0}, rotate_(0),
-        scale_(1,1), game_(game)
+        scale_(1,1), renderer_(game->renderer<SpriteRenderer>())
     {}
 
 
