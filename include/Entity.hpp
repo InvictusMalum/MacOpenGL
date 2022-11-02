@@ -1,19 +1,15 @@
 #pragma once
 
-#include "gl.hpp"
-
 namespace gl{
 class Entity;
 class EntityLink;
 class EntityList;
 }
 
+//#include "gl.hpp"
 #include <Game.hpp>
 
-
 namespace gl {
-
-
     class Entity {
         EntityLink* link_;
 

@@ -1,18 +1,16 @@
 #pragma once
 
-#include "gl.hpp"
-
 namespace gl{
 class SpriteRender;
 class Sprite;
 }
 
+#include "gl.hpp"
+
 #include <Entity.hpp>
 #include <shader.hpp>
 
 namespace gl {
-
-
     class SpriteRenderer {
         Shader shader_;
         unsigned int VAO_;
@@ -42,7 +40,7 @@ namespace gl {
         Sprite(Game* game);
         ~Sprite() {}
 
-        void loadGame(Game* game) {game_ = game;}
+        //void loadGame(Game* game) {game_ = game;}
 
         void moveTo(uint16_t xPos, uint16_t yPos);
         void move(uint16_t xPos, uint16_t yPos);
@@ -53,9 +51,9 @@ namespace gl {
         void setScale(float xScale, float yScale);
         void scale(float xScale, float yScale);
 
-        void render();
+        void render(glm::mat4& windowModel);
         virtual void init() {};
-        virtual void update() {};
+        virtual void update(const gl::GameData* gameData) {};
 
     };
 

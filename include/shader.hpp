@@ -1,10 +1,10 @@
 #pragma once
 
-#include "gl.hpp"
-
 namespace gl{
 class Shader;
 }
+
+#include "gl.hpp"
 
 #include <string>
 

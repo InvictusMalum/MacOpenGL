@@ -1,26 +1,26 @@
 #pragma once
 
-#include "gl.hpp"
-
 namespace gl{
-class Window;
+    class Window;
+    enum class WindowType {
+        static_window,
+        stretch_window,
+        scale_window,
+        dynamic_window
+    };
 }
+
+#include "gl.hpp"
+#include "Game.hpp"
 
 #include <map>
 
 namespace gl {
 
     
-    
 
     class Window {
         public:
-        enum WindowType {
-            static_window,
-            stretch_window,
-            scale_window,
-            dynamic_window
-        };
 
         private:
         GLFWwindow* window_;

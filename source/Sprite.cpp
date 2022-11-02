@@ -95,8 +95,8 @@ namespace gl {
     }
 
 
-    void Sprite::render() {
-        renderer_->render(size_, position_, scale_, rotate_);
+    void Sprite::render(glm::mat4& windowModel) {
+        renderer_->render(size_, position_, scale_, rotate_, windowModel);
     }  
     // virtual void update()=0;
 

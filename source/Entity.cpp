@@ -123,7 +123,7 @@ namespace gl {
         }
     }
     template <typename... params>
-    void call(void (Entity::*method)(params...), params... args) {
+    void EntityList::call(void (Entity::*method)(params...), params... args) {
         for (EntityLink* link = front_->next(); link->next();
                 link = link->next()) {
             link->entity()->*method(args...);

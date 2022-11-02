@@ -2,6 +2,8 @@
 #include <stdexcept>
 #include <functional>
 
+#include <iostream>
+
 #include <glm/gtc/matrix_transform.hpp>
 
 namespace gl {
@@ -60,7 +62,17 @@ namespace gl {
         type_(type), game_(game), winWidth_(windowWidth),
         winHeight_(windowHeight)
     {
-        window_ = glfwCreateWindow(winWidth_, winHeight_, title, nullptr, nullptr);
+                // glfw: initialize and configure
+            // ------------------------------
+            glfwInit();
+            glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+            glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+            glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+        #ifdef __APPLE__
+            glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+        #endif
+        window_ = glfwCreateWindow(winWidth_, winHeight_, title, NULL, NULL);
         if (window_ == nullptr)
             throw std::runtime_error("Failed To Create GLFW Window");
         
