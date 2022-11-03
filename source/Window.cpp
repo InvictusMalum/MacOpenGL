@@ -62,19 +62,11 @@ namespace gl {
         type_(type), game_(game), winWidth_(windowWidth),
         winHeight_(windowHeight)
     {
-                // glfw: initialize and configure
-            // ------------------------------
-            glfwInit();
-            glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-            glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-            glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-        #ifdef __APPLE__
-            glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-        #endif
         window_ = glfwCreateWindow(winWidth_, winHeight_, title, NULL, NULL);
         if (window_ == nullptr)
             throw std::runtime_error("Failed To Create GLFW Window");
+
+        
         
         // If window mode is static then 
         if (type_ == WindowType::static_window)
@@ -86,6 +78,12 @@ namespace gl {
         g_windowRegistry.registerWindow(window_, this);
 
         glfwMakeContextCurrent(window_);
+
+        if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+            std::cerr << "Failed to initialize GLAD\n";
+        }
+        
+        glViewport(0, 0, winWidth_, winHeight_);
 
         
     }

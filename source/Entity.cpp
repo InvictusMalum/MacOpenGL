@@ -110,13 +110,13 @@ namespace gl {
         entity->setNext(last_);
     }
 
-    void EntityList::render(glm::mat4* windowModel) {
+    void EntityList::render(const glm::mat4 &windowModel) {
         for (EntityLink* link = front_->next(); link->next();
                 link = link->next()) {
             link->entity()->render(windowModel);
         }
     }
-    void EntityList::update(GameData* gameData) {
+    void EntityList::update(const GameData &gameData) {
         for (EntityLink* link = front_->next(); link->next();
                 link = link->next()) {
             link->entity()->update(gameData);

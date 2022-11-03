@@ -1,88 +1,52 @@
 #include <Game.hpp>
 
+#include <Sprite.hpp>
+
+
+#include <iostream>
 namespace gl {
     Game::Game(uint32_t fps, uint16_t fieldWidth, uint16_t fieldHeight,
             const char* windowTitle, WindowType windowType) :
+        fps_(fps), width_(fieldWidth), height_(fieldHeight), window_(nullptr),
+        entities_(new EntityList())
+    {
+        glfwInit();
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        #ifdef __APPLE__
+            glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+        #endif
 
-        fps_(fps), width_(fieldWidth), height_(fieldHeight),
-        window_(new Window(this, windowType, fieldWidth, fieldHeight, windowTitle))
-    {}
+        window_ = new Window(this, windowType, fieldWidth, fieldHeight, windowTitle);
 
-    Game::~Game() {
-        delete window_;
+
+        SpriteRenderer *spriteRenderer = new SpriteRenderer
+            (Shader(SpriteRenderer::VERTEX_PATH, SpriteRenderer::FRAMENT_PATH));
+        loadRenderer<SpriteRenderer>(spriteRenderer);
+
     }
 
-    // template<typename T>
-    // bool Game::loadRenderer(T* renderer) {
-    //     std::type_index index = typeid(renderer);
-    //     if (renderMap_[index]) return false;
-    //     renderMap_[index] = renderer;
-    //     return true;
-    // }
-
-    // template<typename T>
-    // T* Game::renderer() {
-    //     return (T*)renderMap_[typeid(T)];
-    // }
-
-    // // Remove renderer of type T from internal map
-    // // Returns pointer if removed
-    // // Returns nullptr if renderer of type T doesn't exist
-    // template<typename T>
-    // T* Game::removeRenderer() {
-    //     if (!renderMap_[typeid(T)]) return nullptr;
-    //     T* tmpReturn = renderMap_[typeid(T)];
-    //     renderMap_.erase(typeid(T));
-    //     return tmpReturn;
-    // }
-
-    // // Remove renderer from internal map
-    // // Returns pointer if removed
-    // // Returns nullptr if renderer of type T doesn't exist
-    // // or pointer doesn't match provided renderer
-    // template<typename T>
-    // T* Game::removeRenderer(T* renderer) {
-    //     if (!renderer || renderMap_[typeid(T)] != renderer)
-    //         return nullptr;
-    //     T* tmpReturn = renderMap_[typeid(T)];
-    //     renderMap_.erase(typeid(T));
-    //     return tmpReturn;
-    // }
-
-    // // Removes and deletes renderer of given type
-    // // from internal map
-    // // Returns true if renderer of type T was delete
-    // // false if not found in map
-    // template<typename T>
-    // bool Game::deleteRenderer() {
-    //     T* tmpRenderer = renderMap_[typeid(T)];
-    //     if (!tmpRenderer) return nullptr;
-    //     delete tmpRenderer;
-    //     renderMap_.erase(typeid(T));
-    //     return true;
-    // }
-
-    // // Removes and deletes renderer of given type
-    // // from internal map
-    // // Returns true if renderer was delete
-    // // false if not found in map
-    // template<typename T>
-    // bool Game::deleteRenderer(T* renderer) {
-    //     T* tmpRenderer = renderMap_[typeid(T)];
-    //     if (!tmpRenderer) return nullptr;
-    //     delete tmpRenderer;
-    //     renderMap_.erase(typeid(T));
-    //     return true;
-    // }
+    Game::~Game() {
+        glfwTerminate();
+        if (window_)
+            delete window_;
+    }
 
 
     void Game::loadEntity(Entity* entity) {
         entities_->appendFront(entity);
+        std::cout << "LOADING RENDERER\n";
+        entity->loadRenderer(this);
     }
     void Game::execute() {
+        std::cout << "TEST EXECUTE: " << (bool)entities_ << " : " << (long long)window_ << "\n";
         while (!window_->shouldClose()) {
+            std::cout << "TEST1\n";
+            std::cout << "TEST EXECUTE: " << (bool)entities_ << " : " << window_->windowModel()[0][1] << "\n";
             entities_->render(window_->windowModel());
-            entities_->update(&gameData_);
+            std::cout << "TEST2\n";
+            entities_->update(gameData_);
         }
     }
 

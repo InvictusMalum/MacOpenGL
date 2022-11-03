@@ -1,22 +1,41 @@
 #include "shader.hpp"
 
 #include <iostream>
+#include <fstream>
+#include <string>
+#include <sstream>
 
 #include <GLFW/glfw3.h>
 
 namespace gl {
 
-    Shader::Shader(const char* vertexSource, const char* fragmentSource) {
-        loadShader(vertexSource, fragmentSource);
+    Shader::Shader(const char* vertexPath, const char* fragmentPath) {
+        
+        std::ifstream vertexFile(vertexPath);
+        std::stringstream vertexStream;
+        vertexStream << vertexFile.rdbuf();
+        std::string vertexSource = vertexStream.str();
+
+        std::ifstream fragmentFile(fragmentPath);
+        std::stringstream fragmentStream;
+        fragmentStream << fragmentFile.rdbuf();
+        std::string fragmentSource = fragmentStream.str();
+        std::cout << vertexSource << "\n";
+
+        loadShader(vertexSource.c_str(), fragmentSource.c_str());
     }
 
 
 
     unsigned int Shader::compileVertexShader(const char* vertexSource) {
-        unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
 
+        std::cout << "TEST\n";
+        unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
+        std::cout << "TEST\n";
+    
         glShaderSource(vertexShader, 1, &vertexSource, NULL);
         glCompileShader(vertexShader);
+        
 
         int success;
         glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
@@ -52,10 +71,14 @@ namespace gl {
         unsigned int vertShader = compileVertexShader(vertexSource);
         unsigned int fragShader = compileFragmentShader(fragmentSource);
 
+
+
         id_ = glCreateProgram();
         glAttachShader(id_, vertShader);
         glAttachShader(id_, fragShader);
         glLinkProgram(id_);
+
+        
 
         int success;
         glGetProgramiv(id_, GL_LINK_STATUS, &success);

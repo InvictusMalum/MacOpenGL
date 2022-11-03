@@ -6,6 +6,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <math.h>
 
+#include <iostream>
 namespace gl {
 
     SpriteRenderer::SpriteRenderer(Shader shader) :
@@ -38,7 +39,7 @@ namespace gl {
     }
 
     void SpriteRenderer::render(glm::vec2 size, uint16_t position_[2],
-                glm::vec2 scale, float rotate, glm::mat4 windowModel) {
+                glm::vec2 scale, float rotate, const glm::mat4 &windowModel) {
         // prepare transformations
         shader_.use();
 
@@ -95,7 +96,8 @@ namespace gl {
     }
 
 
-    void Sprite::render(glm::mat4& windowModel) {
+    void Sprite::render(const glm::mat4& windowModel) {
+        std::cout << "SPRITE RENDER TEST: " << (bool)renderer_ << "\n";
         renderer_->render(size_, position_, scale_, rotate_, windowModel);
     }  
     // virtual void update()=0;

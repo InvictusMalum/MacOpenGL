@@ -5,10 +5,10 @@ class SpriteRender;
 class Sprite;
 }
 
-#include "gl.hpp"
-
 #include <Entity.hpp>
 #include <shader.hpp>
+
+#include <deps.h>
 
 namespace gl {
     class SpriteRenderer {
@@ -17,11 +17,14 @@ namespace gl {
 
         public:
 
+        static constexpr char* VERTEX_PATH = "shaders/sprite/sprite.vs";
+        static constexpr char* FRAMENT_PATH = "shaders/sprite/sprite.frag";
+
         SpriteRenderer(Shader shader);
         ~SpriteRenderer();
 
         void render(glm::vec2 size, uint16_t position[2],
-                glm::vec2 scale, float rotate, glm::mat4 windowModel);
+                glm::vec2 scale, float rotate, const glm::mat4 &windowModel);
         
     };
 
@@ -40,7 +43,11 @@ namespace gl {
         Sprite(Game* game);
         ~Sprite() {}
 
-        //void loadGame(Game* game) {game_ = game;}
+        virtual void loadRenderer(Game* game) override {
+            std::cout << "TEST\n";
+            renderer_ = game->renderer<SpriteRenderer>();
+            std::cout << "LOADING RENDERER2: " << (long long)renderer_ << "\n";
+        }
 
         void moveTo(uint16_t xPos, uint16_t yPos);
         void move(uint16_t xPos, uint16_t yPos);
@@ -51,9 +58,8 @@ namespace gl {
         void setScale(float xScale, float yScale);
         void scale(float xScale, float yScale);
 
-        void render(glm::mat4& windowModel);
-        virtual void init() {};
-        virtual void update(const gl::GameData* gameData) {};
+        virtual void render(const glm::mat4& windowModel) override;
+        virtual void update(const gl::GameData& gameData) override {};
 
     };
 

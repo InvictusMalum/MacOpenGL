@@ -10,8 +10,9 @@ namespace gl{
     };
 }
 
-#include "gl.hpp"
 #include "Game.hpp"
+
+#include <deps.h>
 
 #include <map>
 
@@ -45,7 +46,7 @@ namespace gl {
         // Callbacks
         void framebuffer_size_callback(int width, int height);
 
-        glm::mat4* windowModel() {return &windowModel_;}
+        const glm::mat4& windowModel() {return windowModel_;}
         
         void setDimensions(int width, int height);
         void processInput();

@@ -5,10 +5,10 @@ class Game;
 class GameData;
 }
 
-#include "gl.hpp"
-
 #include <Window.hpp>
 #include <Entity.hpp>
+
+#include <deps.h>
 
 #include <map>
 #include <typeinfo>

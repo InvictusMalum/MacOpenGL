@@ -6,8 +6,9 @@ class EntityLink;
 class EntityList;
 }
 
-//#include "gl.hpp"
 #include <Game.hpp>
+
+#include <deps.h>
 
 namespace gl {
     class Entity {
@@ -15,8 +16,10 @@ namespace gl {
 
         public:
 
-        virtual void update(GameData* gameData) {};
-        virtual void render(glm::mat4* windowModel) {};
+        virtual void update(const GameData& gameData) {};
+        virtual void render(const glm::mat4& windowModel) {};
+
+        virtual void loadRenderer(Game* game) {}
         // virtual glm::vec2 hitBox()=0;
         // virtual glm::vec2 position() {return pos_;}
         // virtual float rotation() {return rotation_;}
@@ -67,8 +70,8 @@ namespace gl {
             appendBack(new EntityLink(entity));
         }
 
-        void render(glm::mat4* windowModel);
-        void update(GameData* gameData);
+        void render(const glm::mat4 &windowModel);
+        void update(const GameData &gameData);
 
         template <typename... params>
         void call(void (Entity::*method)(params...), params... args);
