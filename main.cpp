@@ -25,7 +25,7 @@ class SimpleSprite : public gl::Sprite {
 
         moveTo(800/2+200*std::cos(M_PI/180*count), 
                900/2+200*std::sin(M_PI/180*count));
-        setScale(count%20/5.0f+1,count%20/5.0f+1);
+        scale(1.0001,1.0001);
         rotate(2);
     }
 

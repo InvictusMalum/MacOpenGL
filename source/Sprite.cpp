@@ -94,7 +94,7 @@ namespace gl {
         scale_ = {xScale, yScale};
     }
     void Sprite::scale(float xScale, float yScale) {
-
+        scale_ = {scale_[0]*xScale, scale_[1]*yScale};
     }
 
     void Sprite::render(const glm::mat4& windowModel) {
