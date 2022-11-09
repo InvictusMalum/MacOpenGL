@@ -7,13 +7,14 @@ project('OpenGL', ['cpp','c'],
 
 project_dir = meson.current_source_dir()
 
-inc = [include_directories('Libraries/include')]
+inc = [include_directories('Libraries/include'), include_directories('include')]
 inc += './Libraries/lib'
 
 cpp = meson.get_compiler('cpp')
 c = meson.get_compiler('c')
 
-source_files = ['main.cpp', 'glad.c']
+source_files = ['main.cpp', 'glad.c', 'source/Game.cpp', 'source/shader.cpp', 'source/Entity.cpp', 'source/Sprite.cpp',
+    'source/Window.cpp']
 
 deps = []
 
@@ -31,7 +32,9 @@ elif host_system == 'darwin'
   deps += cpp.find_library('libglfw.3.3', dirs : project_dir + '/Libraries/lib', static : false)
 
 elif host_system == 'linux'
+  deps += dependency('GL')
   deps += cpp.find_library('glfw', dirs : project_dir / 'Libraries/lib')
+  
 endif
 
 exe = executable('OpenGL', source_files,
