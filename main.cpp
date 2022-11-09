@@ -1,22 +1,32 @@
 // #include <shader.hpp>
 
 
-
+#define _USE_MATH_DEFINES
 #include <gl.hpp>
 
 #include <iostream>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/string_cast.hpp>
 
+#include <cmath>
+#include <math.h>
 
 class SimpleSprite : public gl::Sprite {
-
+    int count = 0;
     public:
+    
 
     SimpleSprite(const gl::GameData &game) {
-        moveTo(game.width/2, game.height*2/3);
+        moveTo(400, 200);
     }
 
-    void update(const gl::GameData &gameData) override {
-        return;
+    void update(const gl::GameData &game) override {
+        count = (count+1)%360;
+
+        moveTo(800/2+200*std::cos(M_PI/180*count), 
+               900/2+200*std::sin(M_PI/180*count));
+        setScale(count%20/5.0f+1,count%20/5.0f+1);
+        rotate(2);
     }
 
 };

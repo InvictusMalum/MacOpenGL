@@ -7,9 +7,6 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 namespace gl {
-
-    
-
     class WindowRegistry {
         
         std::map<GLFWwindow*, Window*>
@@ -55,7 +52,6 @@ namespace gl {
 
 
 
-
     Window::Window(Game* game, WindowType type, uint16_t windowWidth,
             uint16_t windowHeight, const char* title,
             void (*key_callback) (GLFWwindow*,int,int,int,int)) :
@@ -65,8 +61,6 @@ namespace gl {
         window_ = glfwCreateWindow(winWidth_, winHeight_, title, NULL, NULL);
         if (window_ == nullptr)
             throw std::runtime_error("Failed To Create GLFW Window");
-
-        
         
         // If window mode is static then 
         if (type_ == WindowType::static_window)
@@ -85,22 +79,24 @@ namespace gl {
         
         glViewport(0, 0, winWidth_, winHeight_);
 
-        
+        adjustModel();
     }
 
     void Window::adjustModel() {
-        windowModel_ = {};
+        windowModel_ = glm::mat4(1.0f);
         switch (type_) {
             case WindowType::static_window:
                 break;
             case WindowType::stretch_window:
-                // Map to range 0 - 2 inclusive
-                windowModel_ = glm::scale(windowModel_,
-                    glm::vec3{1.0f/(game_->fieldWidth()-1)/2.0f,
-                    1.0f/(game_->fieldHeight()-1)/2.0f, 1.0f});
                 // Translate to range -1 - 1 inclusive
                 windowModel_ = glm::translate(windowModel_,
-                    glm::vec3{-1, -1, 0});
+                    glm::vec3{-1, 1, 0});
+                // Map to range 0 - 2 inclusive
+                windowModel_ = glm::scale(windowModel_,
+                    glm::vec3{
+                        2.0f/(game_->fieldWidth()),
+                        -2.0f/(game_->fieldHeight()),
+                        1.0f});
                 break;
             case WindowType::scale_window:
                 break;
@@ -115,6 +111,7 @@ namespace gl {
         winWidth_ = width;
         winHeight_ = height;
         glViewport(0, 0, width, height);
+        adjustModel();
     }
     
     void Window::setDimensions(int width, int height) {
@@ -131,6 +128,4 @@ namespace gl {
     void Window::setWindowShouldClose(bool state) {
         glfwSetWindowShouldClose(window_, state);
     }
-
-
 }

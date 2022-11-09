@@ -48,7 +48,7 @@ namespace gl {
         bool pushFront(EntityList* list);
         bool pushBack(EntityList* list);
         bool moveForward(size_t n=1);
-        bool moveBacward(size_t n=1);
+        bool moveBackward(size_t n=1);
     };
 
     class EntityList {

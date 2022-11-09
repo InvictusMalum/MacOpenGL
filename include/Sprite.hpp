@@ -8,6 +8,8 @@ class Sprite;
 #include <Entity.hpp>
 #include <shader.hpp>
 
+#include <iostream>
+
 #include <deps.h>
 
 namespace gl {
@@ -18,7 +20,7 @@ namespace gl {
         public:
 
         static constexpr char* VERTEX_PATH = "shaders/sprite/sprite.vs";
-        static constexpr char* FRAMENT_PATH = "shaders/sprite/sprite.frag";
+        static constexpr char* FRAGMENT_PATH = "shaders/sprite/sprite.frag";
 
         SpriteRenderer(Shader shader);
         ~SpriteRenderer();
@@ -44,9 +46,7 @@ namespace gl {
         ~Sprite() {}
 
         virtual void loadRenderer(Game* game) override {
-            std::cout << "TEST\n";
             renderer_ = game->renderer<SpriteRenderer>();
-            std::cout << "LOADING RENDERER2: " << (long long)renderer_ << "\n";
         }
 
         void moveTo(uint16_t xPos, uint16_t yPos);
