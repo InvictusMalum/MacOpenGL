@@ -83,16 +83,16 @@ namespace gl {
     }
 
     void Window::adjustModel() {
-        windowModel_ = glm::mat4(1.0f);
+        projection_ = glm::mat4(1.0f);
         switch (type_) {
             case WindowType::static_window:
                 break;
             case WindowType::stretch_window:
                 // Translate to range -1 - 1 inclusive
-                windowModel_ = glm::translate(windowModel_,
+                projection_ = glm::translate(projection_,
                     glm::vec3{-1, 1, 0});
                 // Map to range 0 - 2 inclusive
-                windowModel_ = glm::scale(windowModel_,
+                projection_ = glm::scale(projection_,
                     glm::vec3{
                         2.0f/(game_->fieldWidth()),
                         -2.0f/(game_->fieldHeight()),

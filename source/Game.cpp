@@ -41,7 +41,7 @@ namespace gl {
             glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT);
             
-            entities_->render(window_->windowModel());
+            entities_->render(window_->projection());
             entities_->update(gameData_);
         
             window_->swapBuffers();
