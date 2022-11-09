@@ -58,6 +58,8 @@ namespace gl {
         type_(type), game_(game), winWidth_(windowWidth),
         winHeight_(windowHeight)
     {
+
+
         window_ = glfwCreateWindow(winWidth_, winHeight_, title, NULL, NULL);
         if (window_ == nullptr)
             throw std::runtime_error("Failed To Create GLFW Window");
@@ -76,6 +78,9 @@ namespace gl {
         if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
             std::cerr << "Failed to initialize GLAD\n";
         }
+
+        if (type == WindowType::static_window)
+            glfwSetWindowAttrib(window_, GLFW_RESIZABLE, false);
         
         glViewport(0, 0, winWidth_, winHeight_);
 
@@ -86,7 +91,9 @@ namespace gl {
         projection_ = glm::mat4(1.0f);
         switch (type_) {
             case WindowType::static_window:
-                break;
+                // Fall through as static_window projection is same as stretch
+                // just static can't changes size after the fact
+
             case WindowType::stretch_window:
                 // Translate to range -1 - 1 inclusive
                 projection_ = glm::translate(projection_,
@@ -100,6 +107,7 @@ namespace gl {
                 break;
             case WindowType::scale_window:
                 break;
+
             case WindowType::dynamic_window:
                 break;
                 
@@ -109,7 +117,8 @@ namespace gl {
     void Window::adjustProjection() {
         switch (type_) {
             case WindowType::static_window:
-                break;
+                break; // Maintains current projection regardless of changes in window
+                
             case WindowType::stretch_window:
                 break; // Maintains current projection regardless of changes in window
 
