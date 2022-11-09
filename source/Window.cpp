@@ -79,10 +79,10 @@ namespace gl {
         
         glViewport(0, 0, winWidth_, winHeight_);
 
-        adjustModel();
+        initializeProjection();
     }
 
-    void Window::adjustModel() {
+    void Window::initializeProjection() {
         projection_ = glm::mat4(1.0f);
         switch (type_) {
             case WindowType::static_window:
@@ -106,12 +106,27 @@ namespace gl {
         }
     }
 
+    void Window::adjustProjection() {
+        switch (type_) {
+            case WindowType::static_window:
+                break;
+            case WindowType::stretch_window:
+                break; // Maintains current projection regardless of changes in window
+
+            case WindowType::scale_window:
+                break;
+            case WindowType::dynamic_window:
+                break;
+                
+        }
+    }
+
     // Callback for adjusting view window size
     void Window::framebuffer_size_callback(int width, int height) {
         winWidth_ = width;
         winHeight_ = height;
         glViewport(0, 0, width, height);
-        adjustModel();
+        adjustProjection();
     }
     
     void Window::setDimensions(int width, int height) {

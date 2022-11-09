@@ -38,7 +38,8 @@ namespace gl {
 
         private:
 
-        void adjustModel(); // Set sceenModel to proper transform
+        void adjustProjection(); // Adjust projection for any changes in screen size
+        void initializeProjection(); // Set projection to proper transform
 
         public:
         
