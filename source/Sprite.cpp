@@ -44,13 +44,15 @@ namespace gl {
         shader_.use();
 
         glm::mat4 model = glm::mat4(1.0f);
-        model = glm::scale(model, glm::vec3(size, 1.0f));
-        model = glm::scale(model, glm::vec3(scale, 1.0f));
+        model = glm::translate(model, glm::vec3((float)position_[0], (float)position_[1], 0.0f));
         model = glm::rotate(model, glm::radians(rotate),
             glm::vec3(0.0f, 0.0f, 1.0f));
-        // model = glm::translate(model, glm::vec3(position_, 0.0f));  
-    
+        model = glm::scale(model, glm::vec3(size*scale, 1.0f));
+        
+        
         shader_.setMat4("model", model);
+
+        shader_.setMat4("projection", windowModel);
     
         // glActiveTexture(GL_TEXTURE0);
         // texture.Bind();
@@ -62,12 +64,12 @@ namespace gl {
 
 
     Sprite::Sprite() :
-        size_(0.3,0.2), position_{0,0}, rotate_(0),
+        size_(100,100), position_{0,0}, rotate_(0),
         scale_(1,1), renderer_(nullptr)
     {}
 
     Sprite::Sprite(Game* game) :
-        size_(0.3,0.2), position_{0,0}, rotate_(0),
+        size_(100,100), position_{0,0}, rotate_(0),
         scale_(1,1), renderer_(game->renderer<SpriteRenderer>())
     {}
 
@@ -95,13 +97,8 @@ namespace gl {
 
     }
 
-
     void Sprite::render(const glm::mat4& windowModel) {
-        std::cout << "SPRITE RENDER TEST: " << (bool)renderer_ << "\n";
         renderer_->render(size_, position_, scale_, rotate_, windowModel);
     }  
     // virtual void update()=0;
-
-
-
 }

@@ -1,9 +1,7 @@
 #include <Game.hpp>
-
 #include <Sprite.hpp>
-
-
 #include <iostream>
+
 namespace gl {
     Game::Game(uint32_t fps, uint16_t fieldWidth, uint16_t fieldHeight,
             const char* windowTitle, WindowType windowType) :
@@ -20,9 +18,8 @@ namespace gl {
 
         window_ = new Window(this, windowType, fieldWidth, fieldHeight, windowTitle);
 
-
         SpriteRenderer *spriteRenderer = new SpriteRenderer
-            (Shader(SpriteRenderer::VERTEX_PATH, SpriteRenderer::FRAMENT_PATH));
+            (Shader(SpriteRenderer::VERTEX_PATH, SpriteRenderer::FRAGMENT_PATH));
         loadRenderer<SpriteRenderer>(spriteRenderer);
 
     }
@@ -36,20 +33,19 @@ namespace gl {
 
     void Game::loadEntity(Entity* entity) {
         entities_->appendFront(entity);
-        std::cout << "LOADING RENDERER\n";
         entity->loadRenderer(this);
     }
+
     void Game::execute() {
-        std::cout << "TEST EXECUTE: " << (bool)entities_ << " : " << (long long)window_ << "\n";
         while (!window_->shouldClose()) {
-            std::cout << "TEST1\n";
-            std::cout << "TEST EXECUTE: " << (bool)entities_ << " : " << window_->windowModel()[0][1] << "\n";
+            glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+            glClear(GL_COLOR_BUFFER_BIT);
+            
             entities_->render(window_->windowModel());
-            std::cout << "TEST2\n";
             entities_->update(gameData_);
+        
+            window_->swapBuffers();
+            glfwPollEvents();
         }
     }
-
-
-
 }

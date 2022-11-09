@@ -65,7 +65,7 @@ namespace gl {
 
         template<typename T>
         bool loadRenderer(T* renderer) {
-            std::type_index index = typeid(renderer);
+            std::type_index index = typeid(T);
             if (renderMap_[index]) return false;
             renderMap_[index] = renderer;
             return true;

@@ -1,8 +1,6 @@
 #include <Entity.hpp>
 
 namespace gl {
-
-
     EntityLink::EntityLink(Entity* entity) :
         next_(nullptr), last_(nullptr), entity_(entity)
     {}
@@ -62,7 +60,7 @@ namespace gl {
         return !(i < n);
     }
 
-    bool EntityLink::moveBacward(size_t n) {
+    bool EntityLink::moveBackward(size_t n) {
         if (!next_ || !n) return !(bool)n;
         EntityLink* link = next_;
         breakFromList();
@@ -80,7 +78,6 @@ namespace gl {
         last_ = link;
         return !(i < n);
     }
-
 
     EntityList::EntityList() :
         front_(new EntityLink(nullptr)),
@@ -129,6 +126,4 @@ namespace gl {
             link->entity()->*method(args...);
         }
     }
-
-
 }
