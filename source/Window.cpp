@@ -5,6 +5,7 @@
 #include <iostream>
 
 #include <glm/gtc/matrix_transform.hpp>
+#include <algorithm>
 
 namespace gl {
     class WindowRegistry {
@@ -81,6 +82,7 @@ namespace gl {
 
         if (type == WindowType::static_window)
             glfwSetWindowAttrib(window_, GLFW_RESIZABLE, false);
+        ratio_ = (float)winWidth_ / winHeight_;
         
         glViewport(0, 0, winWidth_, winHeight_);
 
@@ -88,30 +90,18 @@ namespace gl {
     }
 
     void Window::initializeProjection() {
+
         projection_ = glm::mat4(1.0f);
-        switch (type_) {
-            case WindowType::static_window:
-                // Fall through as static_window projection is same as stretch
-                // just static can't changes size after the fact
-
-            case WindowType::stretch_window:
-                // Translate to range -1 - 1 inclusive
-                projection_ = glm::translate(projection_,
-                    glm::vec3{-1, 1, 0});
-                // Map to range 0 - 2 inclusive
-                projection_ = glm::scale(projection_,
-                    glm::vec3{
-                        2.0f/(game_->fieldWidth()),
-                        -2.0f/(game_->fieldHeight()),
-                        1.0f});
-                break;
-            case WindowType::scale_window:
-                break;
-
-            case WindowType::dynamic_window:
-                break;
-                
-        }
+        // Translate to range -1 - 1 inclusive
+        projection_ = glm::translate(projection_,
+            glm::vec3{-1, 1, 0});
+        // Map to range 0 - 2 inclusive
+        projection_ = glm::scale(projection_,
+            glm::vec3{
+                2.0f/(game_->fieldWidth()),
+                -2.0f/(game_->fieldHeight()),
+                1.0f});
+        
     }
 
     void Window::adjustProjection() {
@@ -123,6 +113,17 @@ namespace gl {
                 break; // Maintains current projection regardless of changes in window
 
             case WindowType::scale_window:
+                
+                // Map to range 0 - 2 inclusive
+                float hscale = std::min((float)winHeight_, winWidth_/ratio_) / winWidth_;
+                float wscale = std::min((float)winWidth_, winHeight_*ratio_) / winHeight_;
+                projection_ = glm::scale(projection_,
+                    glm::vec3{
+                        2.0f/(game_->fieldWidth()) * wscale,
+                        -2.0f/(game_->fieldHeight()) * hscale,
+                        1.0f});
+                projection_ = glm::translate(projection_,
+                    glm::vec3{-game_->fieldWidth()/2.0f, -game_->fieldHeight()/2.0f, 0});
                 break;
             case WindowType::dynamic_window:
                 break;
