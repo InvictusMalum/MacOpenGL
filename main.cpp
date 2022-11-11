@@ -32,7 +32,7 @@ class SimpleSprite : public gl::Sprite {
 };
 
 int main() {
-    gl::Game game(24, 800, 900, "gl Library Test", gl::WindowType::stretch_window);
+    gl::Game game(24, 800, 900, "gl Library Test", gl::WindowType::scale_window);
     game.loadEntity(new SimpleSprite(game.data()));
     game.execute();
 

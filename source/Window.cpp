@@ -113,17 +113,15 @@ namespace gl {
                 break; // Maintains current projection regardless of changes in window
 
             case WindowType::scale_window:
-                
+                projection_ = glm::mat4(1.0f);
                 // Map to range 0 - 2 inclusive
-                float hscale = std::min((float)winHeight_, winWidth_/ratio_) / winWidth_;
-                float wscale = std::min((float)winWidth_, winHeight_*ratio_) / winHeight_;
                 projection_ = glm::scale(projection_,
                     glm::vec3{
-                        2.0f/(game_->fieldWidth()) * wscale,
-                        -2.0f/(game_->fieldHeight()) * hscale,
+                        2.0f/(game_->fieldWidth()) * std::min((float)winWidth_, winHeight_*ratio_) / winWidth_,
+                        -2.0f/(game_->fieldHeight()) * std::min((float)winHeight_, winWidth_/ratio_) / winHeight_,
                         1.0f});
                 projection_ = glm::translate(projection_,
-                    glm::vec3{-game_->fieldWidth()/2.0f, -game_->fieldHeight()/2.0f, 0});
+                    glm::vec3{-(game_->fieldWidth()/2.0f), -(game_->fieldHeight()/2.0f), 0});
                 break;
             case WindowType::dynamic_window:
                 break;
