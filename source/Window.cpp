@@ -124,6 +124,8 @@ namespace gl {
                     glm::vec3{-(game_->fieldWidth()/2.0f), -(game_->fieldHeight()/2.0f), 0});
                 break;
             case WindowType::dynamic_window:
+                game_->setGameSize(winWidth_, winHeight_);
+                initializeProjection();
                 break;
                 
         }

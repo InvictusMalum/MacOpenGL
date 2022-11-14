@@ -13,19 +13,29 @@
 
 class SimpleSprite : public gl::Sprite {
     int count = 0;
+    bool goingLeft = true;
     public:
     
 
     SimpleSprite(const gl::GameData &game) {
-        moveTo(400, 200);
+        moveTo(game.width/2, game.height/2);
     }
 
-    void update(const gl::GameData &game) override {
-        count = (count+1)%360;
+    void GameSize_callback(uint16_t width, uint16_t height) override {
+        setY(height/2);
+        if (xPos() > width) setX(width);
+    } 
 
-        moveTo(800/2+200*std::cos(M_PI/180*count), 
-               900/2+200*std::sin(M_PI/180*count));
-        scale(1.0001,1.0001);
+    void update(const gl::GameData &game) override {
+        
+        if (goingLeft) {
+            moveX(-5);
+            if(xPos() < 0) goingLeft = false;
+        } else {
+            moveX(5);
+            if (xPos() > game.width) goingLeft = true;
+        }
+
         rotate(2);
     }
 
