@@ -119,11 +119,5 @@ namespace gl {
             link->entity()->update(gameData);
         }
     }
-    template <typename... params>
-    void EntityList::call(void (Entity::*method)(params...), params... args) {
-        for (EntityLink* link = front_->next(); link->next();
-                link = link->next()) {
-            link->entity()->*method(args...);
-        }
-    }
+    
 }
