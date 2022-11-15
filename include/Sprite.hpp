@@ -51,6 +51,13 @@ namespace gl {
 
         void moveTo(uint16_t xPos, uint16_t yPos);
         void move(uint16_t xPos, uint16_t yPos);
+        void setX(uint16_t xPos) {position_[0] = xPos;}
+        void setY(uint16_t yPos) {position_[1] = yPos;}
+        void moveX(uint16_t xPos) {position_[0] += xPos;}
+        void moveY(uint16_t yPos) {position_[1] += yPos;}
+        uint16_t xPos() {return position_[0];}
+        uint16_t yPos() {return position_[1];}
+
 
         void setRotation(float rotation);
         void rotate(float rotation);

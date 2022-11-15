@@ -39,7 +39,7 @@ namespace gl {
     }
 
     void SpriteRenderer::render(glm::vec2 size, uint16_t position_[2],
-                glm::vec2 scale, float rotate, const glm::mat4 &windowModel) {
+                glm::vec2 scale, float rotate, const glm::mat4 &projection) {
         // prepare transformations
         shader_.use();
 
@@ -52,7 +52,7 @@ namespace gl {
         
         shader_.setMat4("model", model);
 
-        shader_.setMat4("projection", windowModel);
+        shader_.setMat4("projection", projection);
     
         // glActiveTexture(GL_TEXTURE0);
         // texture.Bind();
@@ -97,8 +97,8 @@ namespace gl {
         scale_ = {scale_[0]*xScale, scale_[1]*yScale};
     }
 
-    void Sprite::render(const glm::mat4& windowModel) {
-        renderer_->render(size_, position_, scale_, rotate_, windowModel);
+    void Sprite::render(const glm::mat4& projection) {
+        renderer_->render(size_, position_, scale_, rotate_, projection);
     }  
     // virtual void update()=0;
 }

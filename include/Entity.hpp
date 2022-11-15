@@ -16,10 +16,14 @@ namespace gl {
 
         public:
 
-        virtual void update(const GameData& gameData) {};
-        virtual void render(const glm::mat4& windowModel) {};
+        virtual void update(const GameData& gameData) {}
+        virtual void render(const glm::mat4& windowModel) {}
 
         virtual void loadRenderer(Game* game) {}
+
+        // Callback methods
+        virtual void GameSize_callback(uint16_t width, uint16_t height) {}
+
         // virtual glm::vec2 hitBox()=0;
         // virtual glm::vec2 position() {return pos_;}
         // virtual float rotation() {return rotation_;}
@@ -73,8 +77,13 @@ namespace gl {
         void render(const glm::mat4 &windowModel);
         void update(const GameData &gameData);
 
-        template <typename... params>
-        void call(void (Entity::*method)(params...), params... args);
+       template <typename... params>
+        void call(void (Entity::*method)(params...), params... args) {
+            for (EntityLink* link = front_->next(); link->next();
+                    link = link->next()) {
+                (link->entity()->*method)(args...);
+            }
+        }
     };
 
 }

@@ -5,6 +5,7 @@
 #include <iostream>
 
 #include <glm/gtc/matrix_transform.hpp>
+#include <algorithm>
 
 namespace gl {
     class WindowRegistry {
@@ -58,6 +59,8 @@ namespace gl {
         type_(type), game_(game), winWidth_(windowWidth),
         winHeight_(windowHeight)
     {
+
+
         window_ = glfwCreateWindow(winWidth_, winHeight_, title, NULL, NULL);
         if (window_ == nullptr)
             throw std::runtime_error("Failed To Create GLFW Window");
@@ -76,31 +79,53 @@ namespace gl {
         if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
             std::cerr << "Failed to initialize GLAD\n";
         }
+
+        if (type == WindowType::static_window)
+            glfwSetWindowAttrib(window_, GLFW_RESIZABLE, false);
+        ratio_ = (float)winWidth_ / winHeight_;
         
         glViewport(0, 0, winWidth_, winHeight_);
 
-        adjustModel();
+        initializeProjection();
     }
 
-    void Window::adjustModel() {
-        windowModel_ = glm::mat4(1.0f);
+    void Window::initializeProjection() {
+
+        projection_ = glm::mat4(1.0f);
+        // Translate to range -1 - 1 inclusive
+        projection_ = glm::translate(projection_,
+            glm::vec3{-1, 1, 0});
+        // Map to range 0 - 2 inclusive
+        projection_ = glm::scale(projection_,
+            glm::vec3{
+                2.0f/(game_->fieldWidth()),
+                -2.0f/(game_->fieldHeight()),
+                1.0f});
+        
+    }
+
+    void Window::adjustProjection() {
         switch (type_) {
             case WindowType::static_window:
-                break;
+                break; // Maintains current projection regardless of changes in window
+                
             case WindowType::stretch_window:
-                // Translate to range -1 - 1 inclusive
-                windowModel_ = glm::translate(windowModel_,
-                    glm::vec3{-1, 1, 0});
-                // Map to range 0 - 2 inclusive
-                windowModel_ = glm::scale(windowModel_,
-                    glm::vec3{
-                        2.0f/(game_->fieldWidth()),
-                        -2.0f/(game_->fieldHeight()),
-                        1.0f});
-                break;
+                break; // Maintains current projection regardless of changes in window
+
             case WindowType::scale_window:
+                projection_ = glm::mat4(1.0f);
+                // Map to range 0 - 2 inclusive
+                projection_ = glm::scale(projection_,
+                    glm::vec3{
+                        2.0f/(game_->fieldWidth()) * std::min((float)winWidth_, winHeight_*ratio_) / winWidth_,
+                        -2.0f/(game_->fieldHeight()) * std::min((float)winHeight_, winWidth_/ratio_) / winHeight_,
+                        1.0f});
+                projection_ = glm::translate(projection_,
+                    glm::vec3{-(game_->fieldWidth()/2.0f), -(game_->fieldHeight()/2.0f), 0});
                 break;
             case WindowType::dynamic_window:
+                game_->setGameSize(winWidth_, winHeight_);
+                initializeProjection();
                 break;
                 
         }
@@ -111,7 +136,7 @@ namespace gl {
         winWidth_ = width;
         winHeight_ = height;
         glViewport(0, 0, width, height);
-        adjustModel();
+        adjustProjection();
     }
     
     void Window::setDimensions(int width, int height) {

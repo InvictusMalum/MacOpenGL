@@ -3,9 +3,9 @@
 #include <iostream>
 
 namespace gl {
-    Game::Game(uint32_t fps, uint16_t fieldWidth, uint16_t fieldHeight,
+    Game::Game(uint32_t fps, uint16_t gameWidth, uint16_t gameHeight,
             const char* windowTitle, WindowType windowType) :
-        fps_(fps), width_(fieldWidth), height_(fieldHeight), window_(nullptr),
+        fps_(fps), gameData_{gameWidth, gameHeight}, window_(nullptr),
         entities_(new EntityList())
     {
         glfwInit();
@@ -16,7 +16,7 @@ namespace gl {
             glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
         #endif
 
-        window_ = new Window(this, windowType, fieldWidth, fieldHeight, windowTitle);
+        window_ = new Window(this, windowType, gameWidth, gameHeight, windowTitle);
 
         SpriteRenderer *spriteRenderer = new SpriteRenderer
             (Shader(SpriteRenderer::VERTEX_PATH, SpriteRenderer::FRAGMENT_PATH));
@@ -31,6 +31,13 @@ namespace gl {
     }
 
 
+    bool Game::setGameSize(uint16_t width, uint16_t height) {
+        gameData_.width = width;
+        gameData_.height = height;
+        entities_->call(&Entity::GameSize_callback, width, height);
+    }
+
+
     void Game::loadEntity(Entity* entity) {
         entities_->appendFront(entity);
         entity->loadRenderer(this);
@@ -41,7 +48,7 @@ namespace gl {
             glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT);
             
-            entities_->render(window_->windowModel());
+            entities_->render(window_->projection());
             entities_->update(gameData_);
         
             window_->swapBuffers();

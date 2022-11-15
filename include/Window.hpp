@@ -29,7 +29,7 @@ namespace gl {
         Game* game_;
         uint16_t winWidth_, winHeight_;
         float ratio_;
-        glm::mat4 windowModel_; // Transforms point on game field to point on screen
+        glm::mat4 projection_; // Transforms point on game field to point on screen
 
         public:
         Window(Game* game, WindowType type, uint16_t windowWidth = 0,
@@ -38,7 +38,8 @@ namespace gl {
 
         private:
 
-        void adjustModel(); // Set sceenModel to proper transform
+        void adjustProjection(); // Adjust projection for any changes in screen size
+        void initializeProjection(); // Set projection to proper transform
 
         public:
         
@@ -46,7 +47,7 @@ namespace gl {
         // Callbacks
         void framebuffer_size_callback(int width, int height);
 
-        const glm::mat4& windowModel() {return windowModel_;}
+        const glm::mat4& projection() {return projection_;}
         
         void setDimensions(int width, int height);
         void processInput();
