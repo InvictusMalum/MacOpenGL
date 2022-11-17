@@ -63,6 +63,16 @@ namespace gl {
         // void bindKey(int scancode, int action, Callback callback);
         // void bindKey(int scancode, int action, int mod, Callback callback);
 
+        uint16_t fieldWidth() {return gameData_.width;}
+        uint16_t fieldHeight() {return gameData_.height;}
+        bool setGameSize(uint16_t width, uint16_t height);
+
+        const GameData& data() {return gameData_;}
+
+        void loadEntity(Entity* entity);
+        void execute();
+
+
         template<typename T>
         bool loadRenderer(T* renderer) {
             std::type_index index = typeid(T);
@@ -125,15 +135,6 @@ namespace gl {
             renderMap_.erase(typeid(T));
             return true;
         }
-
-
-
-        uint16_t fieldWidth() {return width_;}
-        uint16_t fieldHeight() {return height_;}
-        const GameData& data() {return gameData_;}
-
-        void loadEntity(Entity* entity);
-        void execute();
     };
 
 
