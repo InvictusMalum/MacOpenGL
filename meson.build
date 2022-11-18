@@ -4,8 +4,10 @@ project('OpenGL', ['cpp','c'],
 
 # PUT glfw3.dll IN THE BUILD DIRECTORY
 # USE https://mesonbuild.com/Build-targets.html FOR DOING THIS AUTOMATICALLY
+# https://mesonbuild.com/Reference-manual_builtin_meson.html
 
 project_dir = meson.current_source_dir()
+build_dir = meson.current_build_dir()
 
 inc = [include_directories('Libraries/include'), include_directories('include')]
 inc += './Libraries/lib'
@@ -26,7 +28,6 @@ if host_system == 'windows'
 
   # Dynamic is not needed to compile, but is needed in the build
   #deps += cpp.find_library('glfw3', dirs : project_dir / 'Libraries/lib', static : false)
-  
 
 elif host_system == 'darwin'
   deps += cpp.find_library('libglfw.3.3', dirs : project_dir + '/Libraries/lib', static : false)
@@ -34,8 +35,11 @@ elif host_system == 'darwin'
 elif host_system == 'linux'
   deps += dependency('GL')
   deps += cpp.find_library('glfw', dirs : project_dir / 'Libraries/lib')
-  
 endif
+
+install_subdir(project_dir / 'shaders', install_dir: build_dir, strip_directory : false)
+install_subdir(project_dir / 'sprites', install_dir: build_dir, strip_directory : false)
+install_data(project_dir / 'Libraries/lib/glfw3.dll', install_dir: build_dir)
 
 exe = executable('OpenGL', source_files,
     include_directories : inc,
