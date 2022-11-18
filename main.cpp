@@ -30,13 +30,20 @@ class SimpleSprite : public gl::Sprite {
         
         if (goingLeft) {
             moveX(-5);
-            if(xPos() < 0) goingLeft = false;
+            if(xPos() < 5) goingLeft = false;
         } else {
             moveX(5);
             if (xPos() > game.width) goingLeft = true;
         }
 
-        rotate(2);
+        if (game.Keys[GLFW_KEY_UP]) {
+            moveY(-5);
+        }
+        if (game.Keys[GLFW_KEY_DOWN]) {
+            moveY(5);
+        }
+
+        rotate(1);
     }
 
 };

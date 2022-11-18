@@ -20,6 +20,7 @@ namespace gl {
         uint32_t width, height;
         uint32_t fps;
         uint32_t dTime;
+        bool Keys[1024];
     };
 
     class Game {
@@ -36,7 +37,8 @@ namespace gl {
         // }
 
         public:
-
+            bool Keys[1024];
+            bool KeysProcessed[1024];
         
 
         private:
@@ -66,6 +68,8 @@ namespace gl {
         uint16_t fieldWidth() {return gameData_.width;}
         uint16_t fieldHeight() {return gameData_.height;}
         bool setGameSize(uint16_t width, uint16_t height);
+        void pressKey(int key);
+        void releaseKey(int key); 
 
         const GameData& data() {return gameData_;}
 

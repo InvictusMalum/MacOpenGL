@@ -26,6 +26,8 @@ namespace gl {
 
         static void framebuffer_size_central_callback
                 (GLFWwindow* window, int width, int height);
+        static void key_central_callback
+                (GLFWwindow* window, int key, int scancode, int action, int mode);
     
     } g_windowRegistry;
 
@@ -36,6 +38,8 @@ namespace gl {
             return false;
         glfwSetFramebufferSizeCallback(glfwWindow,
             WindowRegistry::framebuffer_size_central_callback);
+        glfwSetKeyCallback(glfwWindow,
+            WindowRegistry::key_central_callback);
 
         windowMap_[glfwWindow] = window;
         return true;
@@ -49,6 +53,12 @@ namespace gl {
             (GLFWwindow* window, int width, int height) {
         g_windowRegistry.windowMap_[window]->
                 framebuffer_size_callback(width, height);
+    }
+
+    void WindowRegistry::key_central_callback
+            (GLFWwindow* window, int key, int scancode, int action, int mode) {
+        g_windowRegistry.windowMap_[window]->
+                key_callback(key, scancode, action, mode);
     }
 
 
@@ -137,6 +147,22 @@ namespace gl {
         winHeight_ = height;
         glViewport(0, 0, width, height);
         adjustProjection();
+    }
+
+    void Window::key_callback(int key, int scancode, int action, int mode)
+    {
+        // when a user presses the escape key, we set the WindowShouldClose property to true, closing the application
+        if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+            glfwSetWindowShouldClose(this->window_, true);
+        if (key >= 0 && key < 1024)
+        {
+            if (action == GLFW_PRESS)
+                game_->pressKey(key);
+            else if (action == GLFW_RELEASE)
+            {
+                game_->releaseKey(key);
+            }
+        }
     }
     
     void Window::setDimensions(int width, int height) {
