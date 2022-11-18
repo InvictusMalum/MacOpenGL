@@ -46,6 +46,7 @@ namespace gl {
 
         // Callbacks
         void framebuffer_size_callback(int width, int height);
+        void key_callback(int key, int scancode, int action, int mode);
 
         const glm::mat4& projection() {return projection_;}
         
