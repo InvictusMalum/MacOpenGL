@@ -36,7 +36,7 @@ class SimpleSprite : public gl::Sprite {
             if (xPos() > game.width) goingLeft = true;
         }
 
-        rotate(2);
+        rotate(1);
     }
 
 };
