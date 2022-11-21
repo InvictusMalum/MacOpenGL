@@ -38,13 +38,13 @@ namespace gl {
         glBindVertexArray(0);
     }
 
-    void SpriteRenderer::render(glm::vec2 size, uint16_t position_[2],
+    void SpriteRenderer::render(glm::vec2 size, glm::vec2 position_,
                 glm::vec2 scale, float rotate, const glm::mat4 &projection) {
         // prepare transformations
         shader_.use();
 
         glm::mat4 model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3((float)position_[0], (float)position_[1], 0.0f));
+        model = glm::translate(model, glm::vec3(position_, 0.0f));
         model = glm::rotate(model, glm::radians(rotate),
             glm::vec3(0.0f, 0.0f, 1.0f));
         model = glm::scale(model, glm::vec3(size*scale, 1.0f));
@@ -74,11 +74,11 @@ namespace gl {
     {}
 
 
-    void Sprite::moveTo(uint16_t xPos, uint16_t yPos) {
+    void Sprite::moveTo(float xPos, float yPos) {
         position_[0] = xPos;
         position_[1] = yPos;
     }
-    void Sprite::move(uint16_t xPos, uint16_t yPos) {
+    void Sprite::move(float xPos, float yPos) {
         position_[0] += xPos;
         position_[1] += yPos;   
     }
