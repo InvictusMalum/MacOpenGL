@@ -9,7 +9,6 @@ namespace gl {
         if(entity_)
             delete entity_;
     }
-
     EntityLink* EntityLink::setNext(EntityLink* link) {
         EntityLink* tmp = next_;
         next_ = link;
@@ -40,7 +39,6 @@ namespace gl {
         breakFromList();
         list->appendFront(this);
     }
-
     bool EntityLink::moveForward(size_t n) {
         if (!last_ || !n) return !(bool)n;
         EntityLink* link = last_;
@@ -92,7 +90,7 @@ namespace gl {
             delete link;
         }
     }
-
+    
     void EntityList::appendFront(EntityLink* entity) {
         front_->next()->setLast(entity);
         entity->setNext(front_->next());

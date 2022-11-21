@@ -12,38 +12,75 @@
 #include <math.h>
 
 class SimpleSprite : public gl::Sprite {
-    int count = 0;
-    bool goingLeft = true;
+    float a[2] = {0,0};
+    float aRot = 0;
+    float v[2] = {0,0};
+    float vRot = 0;
     public:
     
-
     SimpleSprite(const gl::GameData &game) {
         moveTo(game.width/2, game.height/2);
     }
 
     void GameSize_callback(uint16_t width, uint16_t height) override {
         setY(height/2);
-        if (xPos() > width) setX(width);
+        if (getPosX() > width) setX(width);
     } 
 
     void update(const gl::GameData &game) override {
-        
-        if (goingLeft) {
-            moveX(-5);
-            if(xPos() < 5) goingLeft = false;
-        } else {
-            moveX(5);
-            if (xPos() > game.width) goingLeft = true;
+        if (game.Keys[GLFW_KEY_LEFT]) {
+            a[0] += 1*cos((getRotation()+180)*3.1415926/180);
+            a[1] += 1*sin((getRotation()+180)*3.1415926/180);
         }
-
+        if (game.Keys[GLFW_KEY_RIGHT]) {
+            a[0] += 1*cos((getRotation())*3.1415926/180);
+            a[1] += 1*sin((getRotation())*3.1415926/180);
+        }
         if (game.Keys[GLFW_KEY_UP]) {
-            moveY(-5);
+            a[0] += 1*cos((getRotation()+270)*3.1415926/180);
+            a[1] += 1*sin((getRotation()+270)*3.1415926/180);
         }
         if (game.Keys[GLFW_KEY_DOWN]) {
-            moveY(5);
+            a[0] += 1*cos((getRotation()+90)*3.1415926/180);
+            a[1] += 1*sin((getRotation()+90)*3.1415926/180);
         }
 
-        rotate(1);
+        if (game.Keys[GLFW_KEY_A]) {
+            aRot -= .4;
+        }
+        if (game.Keys[GLFW_KEY_D]) {
+            aRot += .4;
+        }
+
+        v[0] += a[0];
+        v[1] += a[1];
+        vRot += aRot;
+        a[0] = 0;
+        a[1] = 0;
+        aRot = 0;
+
+        move((int)v[0], (int)v[1]);
+        rotate(vRot);
+
+        v[0] *= .95;
+        v[1] *= .95;
+        vRot *= .95;
+
+        if (getPosX() < 0) {
+            moveTo(0, getPosY());
+        }
+        if (getPosX() > game.width) {
+            moveTo(game.width, getPosY());
+        }
+        if (getPosY() < 0) {
+            moveTo(getPosX(), 0);
+        }
+        if (getPosY() > game.height) {
+            moveTo(getPosX(), game.height);
+        }
+
+
+        //rotate(1);
     }
 
 };

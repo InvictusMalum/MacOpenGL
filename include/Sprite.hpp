@@ -25,7 +25,7 @@ namespace gl {
         SpriteRenderer(Shader shader);
         ~SpriteRenderer();
 
-        void render(glm::vec2 size, uint16_t position[2],
+        void render(glm::vec2 size, float position[2],
                 glm::vec2 scale, float rotate, const glm::mat4 &windowModel);
         
     };
@@ -34,9 +34,9 @@ namespace gl {
 
         SpriteRenderer* renderer_; 
 
-        uint16_t position_[2];
+        float position_[2];
         glm::vec2 scale_;
-        float rotate_;
+        float rotation_;
         glm::vec2 size_;
 
         public:
@@ -49,16 +49,19 @@ namespace gl {
             renderer_ = game->renderer<SpriteRenderer>();
         }
 
-        void moveTo(uint16_t xPos, uint16_t yPos);
-        void move(uint16_t xPos, uint16_t yPos);
-        void setX(uint16_t xPos) {position_[0] = xPos;}
-        void setY(uint16_t yPos) {position_[1] = yPos;}
-        void moveX(uint16_t xPos) {position_[0] += xPos;}
-        void moveY(uint16_t yPos) {position_[1] += yPos;}
-        uint16_t xPos() {return position_[0];}
-        uint16_t yPos() {return position_[1];}
+        float getPosX() {return position_[0];}
+        float getPosY() {return position_[1];}
+        float getRotation() {return rotation_;}
+        float getScaleX() {return scale_[0];}
+        float getScaleY() {return scale_[1];}
 
-
+        void moveTo(float xPos, float yPos);
+        void move(float xPos, float yPos);
+        void setX(float xPos) {position_[0] = xPos;}
+        void setY(float yPos) {position_[1] = yPos;}
+        void moveX(float xPos) {position_[0] += xPos;}
+        void moveY(float yPos) {position_[1] += yPos;}
+        
         void setRotation(float rotation);
         void rotate(float rotation);
 
