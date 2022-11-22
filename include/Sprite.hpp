@@ -33,7 +33,7 @@ namespace gl {
     class Sprite : public Entity {
 
         SpriteRenderer* renderer_; 
-
+        Texture_base* texture_;
         
         glm::vec2 position_, scale_;
         float rotate_;
@@ -48,6 +48,9 @@ namespace gl {
         virtual void loadRenderer(Game* game) override {
             renderer_ = game->renderer<SpriteRenderer>();
         }
+
+        virtual void loadTextures(const GameData &data) {}
+        void setActiveTexture(Texture_base* texture) {texture_ = texture;}
 
         void moveTo(float xPos, float yPos);
         void move(float xPos, float yPos);

@@ -14,9 +14,9 @@ namespace gl {
     class ResourceManager {
         std::map<std::string, Texture_base*> textures_;
 
+        public:
         ~ResourceManager() {clear();}
 
-        public:
         Texture_base* loadTexture(Texture_base* texture, std::string name);
         Texture_base* texture(std::string name);
 

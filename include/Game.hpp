@@ -7,6 +7,7 @@ class GameData;
 
 #include <Window.hpp>
 #include <Entity.hpp>
+#include <ResourceManager.hpp>
 
 #include <deps.h>
 
@@ -18,9 +19,10 @@ namespace gl {
 
     struct GameData {
         uint32_t width, height;
-        uint32_t fps;
+        uint32_t tps;
         uint32_t dTime;
         bool Keys[1024];
+        ResourceManager resourceManager;
     };
 
     class Game {
@@ -36,17 +38,10 @@ namespace gl {
         //     }
         // }
 
-        public:
-            bool Keys[1024];
-            bool KeysProcessed[1024];
-        
-
         private:
 
         EntityList* entities_;
         Window* window_;
-        uint32_t fps_;
-        uint16_t width_, height_;
         GameData gameData_;
 
         // Garantees pointer is to object of same type as index

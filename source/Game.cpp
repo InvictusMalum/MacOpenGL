@@ -3,9 +3,10 @@
 #include <iostream>
 
 namespace gl {
-    Game::Game(uint32_t fps, uint16_t gameWidth, uint16_t gameHeight,
+    Game::Game(uint32_t tps, uint16_t gameWidth, uint16_t gameHeight,
             const char* windowTitle, WindowType windowType) :
-        fps_(fps), gameData_{gameWidth, gameHeight}, window_(nullptr),
+        gameData_{.width = gameWidth, .height = gameHeight, .tps = tps},
+        window_(nullptr),
         entities_(new EntityList())
     {
         glfwInit();

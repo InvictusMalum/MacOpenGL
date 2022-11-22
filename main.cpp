@@ -18,11 +18,23 @@ class SimpleSprite : public gl::Sprite {
 
     float speed;
 
+    static constexpr char *spriteFile = 
+            "sprites/test_sprite/sprite_square.png";
+
     public:
     
 
     SimpleSprite(const gl::GameData &game) {
         moveTo(game.width/2, game.height/2);
+    }
+
+    static void initializeTextures(const gl::GameData &data) {
+
+        data.resourceManager.loadTexture(spriteFile, "simple_sprite");
+    }
+
+    void loadTextures(const gl::GameData &data) override {
+        setActiveTexture(data.resourceManager.texture("simple_sprite"));
     }
 
     void checkBounds(uint16_t width, uint16_t height) {
@@ -63,7 +75,14 @@ class SimpleSprite : public gl::Sprite {
 };
 
 int main() {
+
+
     gl::Game game(24, 800, 900, "gl Library Test", gl::WindowType::scale_window);
+    gl::Texture* texture = new gl::Texture();
+    texture->generate("sprites/test_sprite/sprite_square.png", false);
+    game.data().resourceManager.loadTexture
+        (texture, "simple texture");
+    
     game.loadEntity(new SimpleSprite(game.data()));
     game.execute();
 
