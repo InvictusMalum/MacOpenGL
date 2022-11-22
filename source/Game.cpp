@@ -37,6 +37,14 @@ namespace gl {
         entities_->call(&Entity::GameSize_callback, width, height);
     }
 
+    void Game::pressKey(int key) {
+        gameData_.Keys[key] = true;
+    }
+
+    void Game::releaseKey(int key) {
+        gameData_.Keys[key] = false;
+    }
+
 
     void Game::loadEntity(Entity* entity) {
         entities_->appendFront(entity);
