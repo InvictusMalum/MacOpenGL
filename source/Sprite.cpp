@@ -38,11 +38,7 @@ namespace gl {
         glBindVertexArray(0);
     }
 
-<<<<<<< HEAD
-    void SpriteRenderer::render(glm::vec2 size, float position_[2],
-=======
     void SpriteRenderer::render(glm::vec2 size, glm::vec2 position_,
->>>>>>> 80c0ebb9d2e6c240c11e86ae35b890c40c8faccc
                 glm::vec2 scale, float rotate, const glm::mat4 &projection) {
         // prepare transformations
         shader_.use();
