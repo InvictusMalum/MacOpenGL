@@ -16,6 +16,7 @@ class SimpleSprite : public gl::Sprite {
     float aRot = 0;
     float v[2] = {0,0};
     float vRot = 0;
+
     public:
     
     SimpleSprite(const gl::GameData &game) {
@@ -23,8 +24,7 @@ class SimpleSprite : public gl::Sprite {
     }
 
     void GameSize_callback(uint16_t width, uint16_t height) override {
-        setY(height/2);
-        if (getPosX() > width) setX(width);
+        moveTo(width/2, height/2);
     } 
 
     void update(const gl::GameData &game) override {
@@ -62,9 +62,9 @@ class SimpleSprite : public gl::Sprite {
         move((int)v[0], (int)v[1]);
         rotate(vRot);
 
-        v[0] *= .95;
-        v[1] *= .95;
-        vRot *= .95;
+        v[0] *= .92;
+        v[1] *= .92;
+        vRot *= .92;
 
         if (getPosX() < 0) {
             moveTo(0, getPosY());
@@ -86,7 +86,7 @@ class SimpleSprite : public gl::Sprite {
 };
 
 int main() {
-    gl::Game game(24, 800, 900, "gl Library Test", gl::WindowType::scale_window);
+    gl::Game game(24, 800, 800, "gl Library Test", gl::WindowType::scale_window);
     game.loadEntity(new SimpleSprite(game.data()));
     game.execute();
 

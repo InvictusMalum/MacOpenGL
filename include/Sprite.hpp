@@ -33,8 +33,8 @@ namespace gl {
     class Sprite : public Entity {
 
         SpriteRenderer* renderer_; 
+        
 
-        glm::vec2 position_, scale_, size_;
         glm::vec2 position_, scale_, size_;
         float rotation_;
 
