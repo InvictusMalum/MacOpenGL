@@ -12,8 +12,12 @@
 #include <math.h>
 
 class SimpleSprite : public gl::Sprite {
-    int count = 0;
-    bool goingLeft = true;
+    static constexpr float accel = 0.01;
+    static constexpr float maxVel = 10;
+    static constexpr float rotateVal = 2;
+
+    float speed;
+
     public:
     
 
@@ -21,29 +25,39 @@ class SimpleSprite : public gl::Sprite {
         moveTo(game.width/2, game.height/2);
     }
 
-    void GameSize_callback(uint16_t width, uint16_t height) override {
-        setY(height/2);
+    void checkBounds(uint16_t width, uint16_t height) {
+        // Check x bound
+        if (xPos() < 0) setX(0);
         if (xPos() > width) setX(width);
+        // Check y bound
+        if (yPos() < 0) setY(0);
+        if (yPos() > height) setY(height);
+    }
+
+    void GameSize_callback(uint16_t width, uint16_t height) override {
+        checkBounds(width, height);
     } 
 
     void update(const gl::GameData &game) override {
+
+        // Rotate
+        if (game.Keys[GLFW_KEY_A]) rotate(-rotateVal); // Left
+        if (game.Keys[GLFW_KEY_D]) rotate(rotateVal); // Right
+
+        // Accelerate
+        if (game.Keys[GLFW_KEY_W]) speed += accel;
+        if (game.Keys[GLFW_KEY_S]) speed -= accel;
+
+        // Move
+        moveX(std::cos(rotation()*3.14159/180)*speed);
+        moveY(std::sin(rotation()*3.14159/180)*speed);
+
+        checkBounds(game.width, game.height);
+
+
+
+
         
-        if (goingLeft) {
-            moveX(-5);
-            if(xPos() < 5) goingLeft = false;
-        } else {
-            moveX(5);
-            if (xPos() > game.width) goingLeft = true;
-        }
-
-        if (game.Keys[GLFW_KEY_UP]) {
-            moveY(-5);
-        }
-        if (game.Keys[GLFW_KEY_DOWN]) {
-            moveY(5);
-        }
-
-        rotate(1);
     }
 
 };

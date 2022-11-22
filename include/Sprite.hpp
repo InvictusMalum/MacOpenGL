@@ -61,6 +61,7 @@ namespace gl {
 
         void setRotation(float rotation);
         void rotate(float rotation);
+        float rotation() {return rotate_;}
 
         void setScale(float xScale, float yScale);
         void scale(float xScale, float yScale);
