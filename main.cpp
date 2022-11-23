@@ -30,7 +30,8 @@ class SimpleSprite : public gl::Sprite {
 
     static void initializeTextures(const gl::GameData &data) {
 
-        data.resourceManager.loadTexture(spriteFile, "simple_sprite");
+        data.resourceManager.loadTexture
+                (new gl::Texture(spriteFile, true), "simple_sprite");
     }
 
     void loadTextures(const gl::GameData &data) override {

@@ -66,7 +66,7 @@ namespace gl {
         void pressKey(int key);
         void releaseKey(int key); 
 
-        const GameData& data() {return gameData_;}
+        GameData& data() {return gameData_;}
 
         void loadEntity(Entity* entity);
         void execute();

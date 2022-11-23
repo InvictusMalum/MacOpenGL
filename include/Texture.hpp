@@ -31,6 +31,7 @@ namespace gl {
         unsigned int Filter_Max; // filtering mode if texture pixels > screen pixels
 
         Texture();
+        Texture(const char* file, bool alpha);
         ~Texture();
 
         // generates texture from image data

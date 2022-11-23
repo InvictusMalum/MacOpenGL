@@ -10,8 +10,8 @@ namespace gl {
         textures_[name] = texture;
         return texture;
     }
-    Texture_base* ResourceManager::texture(std::string name) {
-        return textures_[name];
+    Texture_base* ResourceManager::texture(std::string name) const {
+        return textures_.at(name);
     }
 
     void ResourceManager::clear() {
