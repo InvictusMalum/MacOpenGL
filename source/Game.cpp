@@ -50,6 +50,7 @@ namespace gl {
     void Game::loadEntity(Entity* entity) {
         entities_->appendFront(entity);
         entity->loadRenderer(this);
+        entity->loadTextures(gameData_);
     }
 
     void Game::execute() {

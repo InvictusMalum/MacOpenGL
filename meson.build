@@ -16,7 +16,7 @@ cpp = meson.get_compiler('cpp')
 c = meson.get_compiler('c')
 
 source_files = ['main.cpp', 'glad.c', 'source/Game.cpp', 'source/shader.cpp', 'source/Entity.cpp', 'source/Sprite.cpp',
-    'source/Window.cpp']
+    'source/Window.cpp', 'source/Texture.cpp', 'source/ResourceManager.cpp']
 
 deps = []
 

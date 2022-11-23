@@ -18,21 +18,21 @@ namespace gl {
         unsigned int ID;
 
         // texture image dimensions
-        unsigned int Width, Height; // width and height of loaded image in pixels
+        unsigned int width, height; // width and height of loaded image in pixels
 
         // texture Format
-        unsigned int Internal_Format; // format of texture object
-        unsigned int Image_Format; // format of loaded image
+        unsigned int internal_Format; // format of texture object
+        unsigned int image_Format; // format of loaded image
 
         // texture configuration
-        unsigned int Wrap_S; // wrapping mode on S axis
-        unsigned int Wrap_T; // wrapping mode on T axis
-        unsigned int Filter_Min; // filtering mode if texture pixels < screen pixels
-        unsigned int Filter_Max; // filtering mode if texture pixels > screen pixels
+        unsigned int wrap_S; // wrapping mode on S axis
+        unsigned int wrap_T; // wrapping mode on T axis
+        unsigned int filter_Min; // filtering mode if texture pixels < screen pixels
+        unsigned int filter_Max; // filtering mode if texture pixels > screen pixels
 
         Texture();
         Texture(const char* file, bool alpha);
-        ~Texture();
+        virtual ~Texture();
 
         // generates texture from image data
         void generate(const char* file, bool alpha);

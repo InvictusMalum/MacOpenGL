@@ -25,8 +25,8 @@ namespace gl {
         SpriteRenderer(Shader shader);
         ~SpriteRenderer();
 
-        void render(glm::vec2 size, glm::vec2 position,
-                glm::vec2 scale, float rotate, const glm::mat4 &windowModel);
+        void render(glm::vec2 size, glm::vec2 position, glm::vec2 scale,
+                float rotate, const glm::mat4 &windowModel, Texture_base* texture);
         
     };
 
@@ -49,7 +49,7 @@ namespace gl {
             renderer_ = game->renderer<SpriteRenderer>();
         }
 
-        virtual void loadTextures(const GameData &data) {}
+        virtual void loadTextures(const GameData &data) override {}
         void setActiveTexture(Texture_base* texture) {texture_ = texture;}
 
         void moveTo(float xPos, float yPos);

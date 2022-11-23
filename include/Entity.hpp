@@ -20,7 +20,7 @@ namespace gl {
         virtual void render(const glm::mat4& windowModel) {}
 
         virtual void loadRenderer(Game* game) {}
-        virtual void loadTextures(GameData* data) {}
+        virtual void loadTextures(const GameData& data) {}
 
         // Callback methods
         virtual void GameSize_callback(uint16_t width, uint16_t height) {}

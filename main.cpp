@@ -28,13 +28,13 @@ class SimpleSprite : public gl::Sprite {
         moveTo(game.width/2, game.height/2);
     }
 
-    static void initializeTextures(const gl::GameData &data) {
-
+    static void initializeTextures(gl::GameData &data) {
         data.resourceManager.loadTexture
                 (new gl::Texture(spriteFile, true), "simple_sprite");
     }
 
     void loadTextures(const gl::GameData &data) override {
+        std::cout << "Activating Texture: " << data.resourceManager.texture("simple_sprite") << "\n";
         setActiveTexture(data.resourceManager.texture("simple_sprite"));
     }
 
@@ -78,11 +78,9 @@ class SimpleSprite : public gl::Sprite {
 int main() {
 
 
-    gl::Game game(24, 800, 900, "gl Library Test", gl::WindowType::scale_window);
-    gl::Texture* texture = new gl::Texture();
-    texture->generate("sprites/test_sprite/sprite_square.png", false);
-    game.data().resourceManager.loadTexture
-        (texture, "simple texture");
+    gl::Game game(24, 800, 900, "gl Library Test", gl::WindowType::stretch_window);
+    
+    SimpleSprite::initializeTextures(game.data());
     
     game.loadEntity(new SimpleSprite(game.data()));
     game.execute();

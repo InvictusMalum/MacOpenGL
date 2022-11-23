@@ -16,7 +16,7 @@ namespace gl {
 
     void ResourceManager::clear() {
         for (auto iter : textures_)
-            delete &iter.second;
+            delete iter.second;
     }
 
 
