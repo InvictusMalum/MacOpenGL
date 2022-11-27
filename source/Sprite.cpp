@@ -39,7 +39,8 @@ namespace gl {
     }
 
     void SpriteRenderer::render(glm::vec2 size, glm::vec2 position_,
-                glm::vec2 scale, float rotate, const glm::mat4 &projection) {
+                glm::vec2 scale, float rotate, const glm::mat4 &projection,
+                Texture_base* texture) {
         // prepare transformations
         shader_.use();
 
@@ -53,9 +54,9 @@ namespace gl {
         shader_.setMat4("model", model);
 
         shader_.setMat4("projection", projection);
-    
-        // glActiveTexture(GL_TEXTURE0);
-        // texture.Bind();
+        
+        glActiveTexture(GL_TEXTURE0);
+        texture->bind();
 
         glBindVertexArray(this->VAO_);
         glDrawArrays(GL_TRIANGLES, 0, 6);
@@ -98,7 +99,7 @@ namespace gl {
     }
 
     void Sprite::render(const glm::mat4& projection) {
-        renderer_->render(size_, position_, scale_, rotate_, projection);
+        renderer_->render(size_, position_, scale_, rotate_, projection, texture_);
     }  
     // virtual void update()=0;
 }
