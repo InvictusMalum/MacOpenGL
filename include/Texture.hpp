@@ -7,6 +7,8 @@ namespace gl {
         public:
         virtual ~Texture_base() {}
         virtual void bind() const=0;
+        virtual unsigned int getWidth()=0;
+        virtual unsigned int getHeight()=0;
         
     };
 
@@ -38,6 +40,10 @@ namespace gl {
         void generate(const char* file, bool alpha);
         // binds the texture as the current active GL_TEXTURE_2D texture object
         void bind() const override;
+
+        // Getters for  width and height
+        unsigned int getWidth() override {return width;}
+        unsigned int getHeight() override {return height;}
     };
 
 }

@@ -50,7 +50,10 @@ namespace gl {
         }
 
         virtual void loadTextures(const GameData &data) override {}
-        void setActiveTexture(Texture_base* texture) {texture_ = texture;}
+        void setActiveTexture(Texture_base* texture) {
+            size_ = {texture->getWidth(), texture->getHeight()};
+            texture_ = texture;
+        }
 
         void moveTo(float xPos, float yPos);
         void move(float xPos, float yPos);
