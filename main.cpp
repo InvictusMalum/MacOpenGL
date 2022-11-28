@@ -12,11 +12,10 @@
 #include <math.h>
 
 class SimpleSprite : public gl::Sprite {
-    static constexpr float accel = 0.01;
-    static constexpr float maxVel = 10;
-    static constexpr float rotateVal = 2;
-
-    float speed;
+    float a[2];
+    float v[2];
+    float aRot;
+    float vRot;
 
     static constexpr char *spriteFile = 
             "sprites/test_sprite/sprite_square.png";
@@ -42,22 +41,22 @@ class SimpleSprite : public gl::Sprite {
     } 
 
     void update(const gl::GameData &game) override {
-        if (game.Keys[GLFW_KEY_LEFT]) {
-            a[0] += 1*cos((getRotation()+180)*3.1415926/180);
-            a[1] += 1*sin((getRotation()+180)*3.1415926/180);
-        }
-        if (game.Keys[GLFW_KEY_RIGHT]) {
-            a[0] += 1*cos((getRotation())*3.1415926/180);
-            a[1] += 1*sin((getRotation())*3.1415926/180);
-        }
+        // if (game.Keys[GLFW_KEY_LEFT]) {
+        //     a[0] += 1*cos((getRotation()+180)*3.1415926/180);
+        //     a[1] += 1*sin((getRotation()+180)*3.1415926/180);
+        // }
+        // if (game.Keys[GLFW_KEY_RIGHT]) {
+        //     a[0] += 1*cos((getRotation())*3.1415926/180);
+        //     a[1] += 1*sin((getRotation())*3.1415926/180);
+        // }
         if (game.Keys[GLFW_KEY_UP]) {
             a[0] += 1*cos((getRotation()+270)*3.1415926/180);
             a[1] += 1*sin((getRotation()+270)*3.1415926/180);
         }
-        if (game.Keys[GLFW_KEY_DOWN]) {
-            a[0] += 1*cos((getRotation()+90)*3.1415926/180);
-            a[1] += 1*sin((getRotation()+90)*3.1415926/180);
-        }
+        // if (game.Keys[GLFW_KEY_DOWN]) {
+        //     a[0] += 1*cos((getRotation()+90)*3.1415926/180);
+        //     a[1] += 1*sin((getRotation()+90)*3.1415926/180);
+        // }
 
         if (game.Keys[GLFW_KEY_A]) {
             aRot -= .4;

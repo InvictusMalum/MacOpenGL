@@ -10,12 +10,11 @@ project_dir = meson.current_source_dir()
 build_dir = meson.current_build_dir()
 
 inc = [include_directories('Libraries/include'), include_directories('include')]
-inc += './Libraries/lib'
 
 cpp = meson.get_compiler('cpp')
 c = meson.get_compiler('c')
 
-source_files = ['main.cpp', 'glad.c', 'source/Game.cpp', 'source/shader.cpp', 'source/Entity.cpp', 'source/Sprite.cpp',
+source_files = ['main.cpp', 'glad.c', 'source/Game.cpp', 'source/Shader.cpp', 'source/Entity.cpp', 'source/Sprite.cpp',
     'source/Window.cpp', 'source/Texture.cpp', 'source/ResourceManager.cpp']
 
 deps = []
@@ -26,9 +25,6 @@ if host_system == 'windows'
   deps += cpp.find_library('glfw3dll', dirs : project_dir / 'Libraries/lib', static : true)
   deps += cpp.find_library('glfw3', dirs : project_dir / 'Libraries/lib', static : true)
 
-  # Dynamic is not needed to compile, but is needed in the build
-  #deps += cpp.find_library('glfw3', dirs : project_dir / 'Libraries/lib', static : false)
-
 elif host_system == 'darwin'
   deps += cpp.find_library('libglfw.3.3', dirs : project_dir + '/Libraries/lib', static : false)
 
@@ -37,11 +33,24 @@ elif host_system == 'linux'
   deps += cpp.find_library('glfw', dirs : project_dir / 'Libraries/lib')
 endif
 
+install_data(project_dir / 'Libraries/lib/glfw3.dll')
+
 install_subdir(project_dir / 'shaders', install_dir: build_dir, strip_directory : false)
 install_subdir(project_dir / 'sprites', install_dir: build_dir, strip_directory : false)
 install_data(project_dir / 'Libraries/lib/glfw3.dll', install_dir: build_dir)
 
+subdir('include')
+#subdir('dependencies')
+subdir('source')
+
 exe = executable('OpenGL', source_files,
     include_directories : inc,
-    dependencies : deps)
-#    link_with : dyn_glfw.get_('glfw3.dll'))
+    dependencies : deps,
+    install : true)
+
+pkg_mod = import('pkgconfig')
+pkg_mod.generate(libraries : glBase,
+                 version : '1.0.0',
+                 name : 'glBase',
+                 filebase : 'glBase',
+                 description : 'A base program for using OpenGL.')

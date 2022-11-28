@@ -6,7 +6,7 @@ class Sprite;
 }
 
 #include <Entity.hpp>
-#include <shader.hpp>
+#include <Shader.hpp>
 
 #include <iostream>
 
@@ -68,7 +68,7 @@ namespace gl {
         
         void setRotation(float rotation);
         void rotate(float rotation);
-        float rotation() {return rotate_;}
+        float rotation() {return rotation_;}
 
         void setScale(float xScale, float yScale);
         void scale(float xScale, float yScale);
