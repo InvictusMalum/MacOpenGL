@@ -65,12 +65,12 @@ namespace gl {
 
 
     Sprite::Sprite() :
-        size_(100,100), position_{0,0}, rotate_(0),
+        size_(100,100), position_{0,0}, rotation_(0),
         scale_(1,1), renderer_(nullptr)
     {}
 
     Sprite::Sprite(Game* game) :
-        size_(100,100), position_{0,0}, rotate_(0),
+        size_(100,100), position_{0,0}, rotation_(0),
         scale_(1,1), renderer_(game->renderer<SpriteRenderer>())
     {}
 
@@ -85,10 +85,10 @@ namespace gl {
     }
 
     void Sprite::setRotation(float rotation) {
-        rotate_ = rotation;
+        rotation_ = rotation;
     }
     void Sprite::rotate(float rotation) {
-        rotate_ = fmod(rotate_+rotation, 360);
+        rotation_ = fmod(rotation_+rotation, 360);
     }
 
     void Sprite::setScale(float xScale, float yScale) {
@@ -99,7 +99,7 @@ namespace gl {
     }
 
     void Sprite::render(const glm::mat4& projection) {
-        renderer_->render(size_, position_, scale_, rotate_, projection, texture_);
+        renderer_->render(size_, position_, scale_, rotation_, projection, texture_);
     }  
     // virtual void update()=0;
 }

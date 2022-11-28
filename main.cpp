@@ -23,7 +23,6 @@ class SimpleSprite : public gl::Sprite {
 
     public:
     
-
     SimpleSprite(const gl::GameData &game) {
         moveTo(game.width/2, game.height/2);
     }
@@ -38,46 +37,69 @@ class SimpleSprite : public gl::Sprite {
         setActiveTexture(data.resourceManager.texture("simple_sprite"));
     }
 
-    void checkBounds(uint16_t width, uint16_t height) {
-        // Check x bound
-        if (xPos() < 0) setX(0);
-        if (xPos() > width) setX(width);
-        // Check y bound
-        if (yPos() < 0) setY(0);
-        if (yPos() > height) setY(height);
-    }
-
     void GameSize_callback(uint16_t width, uint16_t height) override {
-        checkBounds(width, height);
+        moveTo(width/2, height/2);
     } 
 
     void update(const gl::GameData &game) override {
+        if (game.Keys[GLFW_KEY_LEFT]) {
+            a[0] += 1*cos((getRotation()+180)*3.1415926/180);
+            a[1] += 1*sin((getRotation()+180)*3.1415926/180);
+        }
+        if (game.Keys[GLFW_KEY_RIGHT]) {
+            a[0] += 1*cos((getRotation())*3.1415926/180);
+            a[1] += 1*sin((getRotation())*3.1415926/180);
+        }
+        if (game.Keys[GLFW_KEY_UP]) {
+            a[0] += 1*cos((getRotation()+270)*3.1415926/180);
+            a[1] += 1*sin((getRotation()+270)*3.1415926/180);
+        }
+        if (game.Keys[GLFW_KEY_DOWN]) {
+            a[0] += 1*cos((getRotation()+90)*3.1415926/180);
+            a[1] += 1*sin((getRotation()+90)*3.1415926/180);
+        }
 
-        // Rotate
-        if (game.Keys[GLFW_KEY_A]) rotate(-rotateVal); // Left
-        if (game.Keys[GLFW_KEY_D]) rotate(rotateVal); // Right
+        if (game.Keys[GLFW_KEY_A]) {
+            aRot -= .4;
+        }
+        if (game.Keys[GLFW_KEY_D]) {
+            aRot += .4;
+        }
 
-        // Accelerate
-        if (game.Keys[GLFW_KEY_W]) speed += accel;
-        if (game.Keys[GLFW_KEY_S]) speed -= accel;
+        v[0] += a[0];
+        v[1] += a[1];
+        vRot += aRot;
+        a[0] = 0;
+        a[1] = 0;
+        aRot = 0;
 
-        // Move
-        moveX(std::cos(rotation()*3.14159/180)*speed);
-        moveY(std::sin(rotation()*3.14159/180)*speed);
+        move((int)v[0], (int)v[1]);
+        rotate(vRot);
 
-        checkBounds(game.width, game.height);
+        v[0] *= .92;
+        v[1] *= .92;
+        vRot *= .92;
+
+        if (getPosX() < 0) {
+            moveTo(0, getPosY());
+        }
+        if (getPosX() > game.width) {
+            moveTo(game.width, getPosY());
+        }
+        if (getPosY() < 0) {
+            moveTo(getPosX(), 0);
+        }
+        if (getPosY() > game.height) {
+            moveTo(getPosX(), game.height);
+        }
 
 
-
-
-        
+        //rotate(1);
     }
 
 };
 
 int main() {
-
-
     gl::Game game(24, 800, 900, "gl Library Test", gl::WindowType::stretch_window);
     
     SimpleSprite::initializeTextures(game.data());

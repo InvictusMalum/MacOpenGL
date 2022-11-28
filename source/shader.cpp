@@ -20,7 +20,6 @@ namespace gl {
         std::stringstream fragmentStream;
         fragmentStream << fragmentFile.rdbuf();
         std::string fragmentSource = fragmentStream.str();
-        std::cout << vertexSource << "\n";
 
         loadShader(vertexSource.c_str(), fragmentSource.c_str());
     }
@@ -28,10 +27,7 @@ namespace gl {
 
 
     unsigned int Shader::compileVertexShader(const char* vertexSource) {
-
-        std::cout << "TEST\n";
         unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
-        std::cout << "TEST\n";
     
         glShaderSource(vertexShader, 1, &vertexSource, NULL);
         glCompileShader(vertexShader);

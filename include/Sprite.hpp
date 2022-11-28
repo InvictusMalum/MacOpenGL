@@ -34,10 +34,9 @@ namespace gl {
 
         SpriteRenderer* renderer_; 
         Texture_base* texture_;
-        
-        glm::vec2 position_, scale_;
-        float rotate_;
-        glm::vec2 size_;
+
+        glm::vec2 position_, scale_, size_;
+        float rotation_;
 
         public:
 
@@ -54,6 +53,11 @@ namespace gl {
             size_ = {texture->getWidth(), texture->getHeight()};
             texture_ = texture;
         }
+        float getPosX() {return position_[0];}
+        float getPosY() {return position_[1];}
+        float getRotation() {return rotation_;}
+        float getScaleX() {return scale_[0];}
+        float getScaleY() {return scale_[1];}
 
         void moveTo(float xPos, float yPos);
         void move(float xPos, float yPos);
@@ -61,10 +65,7 @@ namespace gl {
         void setY(float yPos) {position_[1] = yPos;}
         void moveX(float xPos) {position_[0] += xPos;}
         void moveY(float yPos) {position_[1] += yPos;}
-        float xPos() {return position_[0];}
-        float yPos() {return position_[1];}
-
-
+        
         void setRotation(float rotation);
         void rotate(float rotation);
         float rotation() {return rotate_;}
