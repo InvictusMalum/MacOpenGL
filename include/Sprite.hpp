@@ -25,15 +25,15 @@ namespace gl {
         SpriteRenderer(Shader shader);
         ~SpriteRenderer();
 
-        void render(glm::vec2 size, glm::vec2 position,
-                glm::vec2 scale, float rotate, const glm::mat4 &windowModel);
+        void render(glm::vec2 size, glm::vec2 position, glm::vec2 scale,
+                float rotate, const glm::mat4 &windowModel, Texture_base* texture);
         
     };
 
     class Sprite : public Entity {
 
         SpriteRenderer* renderer_; 
-        
+        Texture_base* texture_;
 
         glm::vec2 position_, scale_, size_;
         float rotation_;
@@ -48,6 +48,11 @@ namespace gl {
             renderer_ = game->renderer<SpriteRenderer>();
         }
 
+        virtual void loadTextures(const GameData &data) override {}
+        void setActiveTexture(Texture_base* texture) {
+            size_ = {texture->getWidth(), texture->getHeight()};
+            texture_ = texture;
+        }
         float getPosX() {return position_[0];}
         float getPosY() {return position_[1];}
         float getRotation() {return rotation_;}
@@ -63,6 +68,7 @@ namespace gl {
         
         void setRotation(float rotation);
         void rotate(float rotation);
+        float rotation() {return rotate_;}
 
         void setScale(float xScale, float yScale);
         void scale(float xScale, float yScale);

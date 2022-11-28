@@ -12,15 +12,29 @@
 #include <math.h>
 
 class SimpleSprite : public gl::Sprite {
-    float a[2] = {0,0};
-    float aRot = 0;
-    float v[2] = {0,0};
-    float vRot = 0;
+    static constexpr float accel = 0.01;
+    static constexpr float maxVel = 10;
+    static constexpr float rotateVal = 2;
+
+    float speed;
+
+    static constexpr char *spriteFile = 
+            "sprites/test_sprite/sprite_square.png";
 
     public:
     
     SimpleSprite(const gl::GameData &game) {
         moveTo(game.width/2, game.height/2);
+    }
+
+    static void initializeTextures(gl::GameData &data) {
+        data.resourceManager.loadTexture
+                (new gl::Texture(spriteFile, false), "simple_sprite");
+    }
+
+    void loadTextures(const gl::GameData &data) override {
+        std::cout << "Activating Texture: " << data.resourceManager.texture("simple_sprite") << "\n";
+        setActiveTexture(data.resourceManager.texture("simple_sprite"));
     }
 
     void GameSize_callback(uint16_t width, uint16_t height) override {
@@ -86,7 +100,10 @@ class SimpleSprite : public gl::Sprite {
 };
 
 int main() {
-    gl::Game game(24, 800, 800, "gl Library Test", gl::WindowType::scale_window);
+    gl::Game game(24, 800, 900, "gl Library Test", gl::WindowType::stretch_window);
+    
+    SimpleSprite::initializeTextures(game.data());
+    
     game.loadEntity(new SimpleSprite(game.data()));
     game.execute();
 

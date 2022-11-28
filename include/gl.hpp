@@ -5,4 +5,5 @@
 #include "shader.hpp"
 #include "Sprite.hpp"
 #include "Window.hpp"
-
+#include "Texture.hpp"
+#include "ResourceManager.hpp"
