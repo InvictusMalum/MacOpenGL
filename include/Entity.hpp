@@ -6,7 +6,7 @@ class EntityLink;
 class EntityList;
 }
 
-#include <Game.hpp>
+#include "Game.hpp"
 
 #include <deps.h>
 

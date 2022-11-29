@@ -17,9 +17,6 @@ namespace gl{
 #include <map>
 
 namespace gl {
-
-    
-
     class Window {
         public:
 

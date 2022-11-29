@@ -5,8 +5,8 @@ class SpriteRender;
 class Sprite;
 }
 
-#include <Entity.hpp>
-#include <Shader.hpp>
+#include "Entity.hpp"
+#include "Shader.hpp"
 
 #include <iostream>
 

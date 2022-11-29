@@ -34,6 +34,7 @@ elif host_system == 'linux'
 endif
 
 install_data(project_dir / 'Libraries/lib/glfw3.dll')
+install_subdir(project_dir / 'Libraries', install_dir : 'C://')
 
 install_subdir(project_dir / 'shaders', install_dir: build_dir, strip_directory : false)
 install_subdir(project_dir / 'sprites', install_dir: build_dir, strip_directory : false)
