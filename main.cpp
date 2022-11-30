@@ -12,13 +12,16 @@
 #include <math.h>
 
 class SimpleSprite : public gl::Sprite {
-    float a[2];
-    float v[2];
-    float aRot;
-    float vRot;
+    float a[2] = {0,0};
+    float v[2] = {0,0};
+    float aRot = 0;
+    float vRot = 0;
+
+    float speed = .05;
+    float rotSpeed = .1;
 
     static constexpr char *spriteFile = 
-            "sprites/test_sprite/sprite_square.png";
+            "sprites/test_sprite/sprite_square2.jpg";
 
     public:
     
@@ -41,28 +44,28 @@ class SimpleSprite : public gl::Sprite {
     } 
 
     void update(const gl::GameData &game) override {
-        // if (game.Keys[GLFW_KEY_LEFT]) {
-        //     a[0] += 1*cos((getRotation()+180)*3.1415926/180);
-        //     a[1] += 1*sin((getRotation()+180)*3.1415926/180);
-        // }
-        // if (game.Keys[GLFW_KEY_RIGHT]) {
-        //     a[0] += 1*cos((getRotation())*3.1415926/180);
-        //     a[1] += 1*sin((getRotation())*3.1415926/180);
-        // }
-        if (game.Keys[GLFW_KEY_UP]) {
-            a[0] += 1*cos((getRotation()+270)*3.1415926/180);
-            a[1] += 1*sin((getRotation()+270)*3.1415926/180);
+        if (game.Keys[GLFW_KEY_LEFT]) {
+            a[0] += speed*cos((getRotation()+180)*3.1415926/180);
+            a[1] += speed*sin((getRotation()+180)*3.1415926/180);
         }
-        // if (game.Keys[GLFW_KEY_DOWN]) {
-        //     a[0] += 1*cos((getRotation()+90)*3.1415926/180);
-        //     a[1] += 1*sin((getRotation()+90)*3.1415926/180);
-        // }
+        if (game.Keys[GLFW_KEY_RIGHT]) {
+            a[0] += speed*cos((getRotation())*3.1415926/180);
+            a[1] += speed*sin((getRotation())*3.1415926/180);
+        }
+        if (game.Keys[GLFW_KEY_UP]) {
+            a[0] += speed*cos((getRotation()+270)*3.1415926/180);
+            a[1] += speed*sin((getRotation()+270)*3.1415926/180);
+        }
+        if (game.Keys[GLFW_KEY_DOWN]) {
+            a[0] += speed*cos((getRotation()+90)*3.1415926/180);
+            a[1] += speed*sin((getRotation()+90)*3.1415926/180);
+        }
 
         if (game.Keys[GLFW_KEY_A]) {
-            aRot -= .4;
+            aRot -= rotSpeed;
         }
         if (game.Keys[GLFW_KEY_D]) {
-            aRot += .4;
+            aRot += rotSpeed;
         }
 
         v[0] += a[0];
@@ -72,24 +75,28 @@ class SimpleSprite : public gl::Sprite {
         a[1] = 0;
         aRot = 0;
 
-        move((int)v[0], (int)v[1]);
+        move(v[0],v[1]);
         rotate(vRot);
 
-        v[0] *= .92;
-        v[1] *= .92;
-        vRot *= .92;
+        //v[0] *= .92;
+        //v[1] *= .92;
+        //vRot *= .92;
 
         if (getPosX() < 0) {
             moveTo(0, getPosY());
+            v[0] = 0;
         }
         if (getPosX() > game.width) {
             moveTo(game.width, getPosY());
+            v[0] = 0;
         }
         if (getPosY() < 0) {
             moveTo(getPosX(), 0);
+            v[1] = 0;
         }
         if (getPosY() > game.height) {
             moveTo(getPosX(), game.height);
+            v[1] = 0;
         }
 
 
