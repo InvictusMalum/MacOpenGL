@@ -38,6 +38,14 @@ namespace gl {
         glBindVertexArray(0);
     }
 
+    SpriteRenderer::setTextureRangeX(float start, float end) {
+        vertices[2] = start;
+        vertices[10] = start;
+        vertices[14] = start;
+        
+        vertices[14] = start;
+    }
+
     void SpriteRenderer::render(glm::vec2 size, glm::vec2 position_,
                 glm::vec2 scale, float rotate, const glm::mat4 &projection,
                 Texture_base* texture) {
