@@ -16,6 +16,7 @@ namespace gl {
     class SpriteRenderer {
         Shader shader_;
         unsigned int VAO_;
+        glm::mat4 textMap_; 
 
         public:
 
@@ -25,9 +26,7 @@ namespace gl {
         SpriteRenderer(Shader shader);
         ~SpriteRenderer();
 
-        setTextureRangeX(float start, float end);
-        setTextureRangeY(float start, float end);
-        setTextureRange(float startX, float endX);
+        void setTextureRange(float startU, float endU, float startV, float endV);
 
         void render(glm::vec2 size, glm::vec2 position, glm::vec2 scale,
                 float rotate, const glm::mat4 &windowModel, Texture_base* texture);
@@ -52,7 +51,7 @@ namespace gl {
         virtual void loadRenderer(Game* game) override {
             renderer_ = game->renderer<SpriteRenderer>();
         }
-        SpriteRender* getRenderer() {return renderer_;}
+        virtual SpriteRenderer* getRenderer() {return renderer_;}
 
         virtual void loadTextures(const GameData &data) override {}
         void setActiveTexture(Texture_base* texture) {

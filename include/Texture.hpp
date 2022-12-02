@@ -9,6 +9,10 @@ namespace gl {
         virtual void bind() const=0;
         virtual unsigned int getWidth()=0;
         virtual unsigned int getHeight()=0;
+
+        // Map width and height to range 0-1
+        virtual float mapWidth(unsigned width);
+        virtual float mapHeight(unsigned height); 
         
     };
 
@@ -44,6 +48,10 @@ namespace gl {
         // Getters for  width and height
         unsigned int getWidth() override {return width;}
         unsigned int getHeight() override {return height;}
+
+        // Map width and height to range 0-1
+        float mapWidth(unsigned width) override {return this->width / width;}
+        float mapHeight(unsigned height) override {return this->height / height;}
     };
 
 }
