@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Shader.hpp"
-#include <Texture.hpp>
+#include "Texture.hpp"
 
 #include <map>
 #include <typeinfo>

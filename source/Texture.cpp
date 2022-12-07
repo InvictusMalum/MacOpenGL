@@ -43,7 +43,7 @@ namespace gl {
         
 
         data = stbi_load(file, &width, &height, &nrChannels, 0);
-        if (!data) std::cerr << "ERRROR OPENGING TEXTURE: " << file << "\n";
+        if (!data) std::cerr << "ERRROR OPENING TEXTURE: " << file << "\n";
 
         this->width = width;
         this->height = height;

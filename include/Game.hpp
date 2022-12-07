@@ -5,9 +5,9 @@ class Game;
 class GameData;
 }
 
-#include <Window.hpp>
-#include <Entity.hpp>
-#include <ResourceManager.hpp>
+#include "Window.hpp"
+#include "Entity.hpp"
+#include "ResourceManager.hpp"
 
 #include <deps.h>
 
