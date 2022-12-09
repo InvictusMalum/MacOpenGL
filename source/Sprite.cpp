@@ -38,6 +38,16 @@ namespace gl {
         glBindVertexArray(0);
     }
 
+    void SpriteRenderer::setTextureRange
+            (float startU, float endU, float startV, float endV) {
+        textMap_ = {};
+        textMap_ = glm::translate(textMap_,
+                glm::vec3(startU, startV, 0.0f));
+        textMap_ = glm::scale(textMap_, 
+                glm::vec3(1/(endU-startU), 1/(endV-startV), 1.0f));
+
+    }
+
     void SpriteRenderer::render(glm::vec2 size, glm::vec2 position_,
                 glm::vec2 scale, float rotate, const glm::mat4 &projection,
                 Texture_base* texture) {
@@ -52,6 +62,7 @@ namespace gl {
         
         
         shader_.setMat4("model", model);
+        shader_.setMat4("textureProjection", textMap_);
 
         shader_.setMat4("projection", projection);
         

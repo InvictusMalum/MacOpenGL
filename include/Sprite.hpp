@@ -16,6 +16,7 @@ namespace gl {
     class SpriteRenderer {
         Shader shader_;
         unsigned int VAO_;
+        glm::mat4 textMap_; 
 
         public:
 
@@ -25,10 +26,13 @@ namespace gl {
         SpriteRenderer(Shader shader);
         ~SpriteRenderer();
 
+        void setTextureRange(float startU, float endU, float startV, float endV);
+
         void render(glm::vec2 size, glm::vec2 position, glm::vec2 scale,
                 float rotate, const glm::mat4 &windowModel, Texture_base* texture);
         
     };
+
 
     class Sprite : public Entity {
 
@@ -47,12 +51,15 @@ namespace gl {
         virtual void loadRenderer(Game* game) override {
             renderer_ = game->renderer<SpriteRenderer>();
         }
+        virtual SpriteRenderer* getRenderer() {return renderer_;}
 
         virtual void loadTextures(const GameData &data) override {}
         void setActiveTexture(Texture_base* texture) {
             size_ = {texture->getWidth(), texture->getHeight()};
             texture_ = texture;
         }
+        Texture_base* getTexture() {return texture_;}
+
         float getPosX() {return position_[0];}
         float getPosY() {return position_[1];}
         float getRotation() {return rotation_;}
