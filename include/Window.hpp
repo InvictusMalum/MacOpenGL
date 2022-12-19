@@ -12,7 +12,7 @@ namespace gl{
 
 #include "Game.hpp"
 
-#include <deps.h>
+#include "deps.h"
 
 #include <map>
 

@@ -4,7 +4,7 @@ namespace gl{
 class Shader;
 }
 
-#include <deps.h>
+#include "deps.h"
 
 #include <string>
 
@@ -17,7 +17,7 @@ namespace gl {
 
         Shader() {}
         Shader(const char* vertexPath, const char* fragmentPath);
-        ~Shader() {}
+        virtual ~Shader() {}
         
 
         private:

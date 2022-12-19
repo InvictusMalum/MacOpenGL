@@ -54,15 +54,21 @@ namespace gl {
     }
 
     void Game::execute() {
+        std::cout << "Starting execution\n";
         while (!window_->shouldClose()) {
+            std::cout << "setting back drop\n";
             glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT);
             
+            std::cout << "rendering entities\n";
             entities_->render(window_->projection());
+            std::cout << "updating entities\n";
             entities_->update(gameData_);
         
+            std::cout << "swapping buffer then polling events\n";
             window_->swapBuffers();
             glfwPollEvents();
+            std::cout << "End of execution phase\n\n";
         }
     }
 }

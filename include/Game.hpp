@@ -9,7 +9,7 @@ class GameData;
 #include "Entity.hpp"
 #include "ResourceManager.hpp"
 
-#include <deps.h>
+#include "deps.h"
 
 #include <map>
 #include <typeinfo>
@@ -18,9 +18,9 @@ class GameData;
 namespace gl {
 
     struct GameData {
-        uint32_t width, height;
+        uint16_t width, height;
         uint32_t tps;
-        uint32_t dTime;
+        float dTime;
         bool Keys[1024];
         ResourceManager resourceManager;
     };

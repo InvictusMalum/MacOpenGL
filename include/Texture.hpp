@@ -11,8 +11,8 @@ namespace gl {
         virtual unsigned int getHeight()=0;
 
         // Map width and height to range 0-1
-        virtual float mapWidth(unsigned width);
-        virtual float mapHeight(unsigned height); 
+        virtual float mapWidth(unsigned width)=0;
+        virtual float mapHeight(unsigned height)=0; 
         
     };
 
