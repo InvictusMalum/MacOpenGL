@@ -22,9 +22,5 @@ namespace gl {
         Texture_base* texture(std::string name) const;
 
         void clear();
-
     };
-
-
-
 }
