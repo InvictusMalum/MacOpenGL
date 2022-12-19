@@ -10,7 +10,7 @@ class Sprite;
 
 #include <iostream>
 
-#include <deps.h>
+#include "deps.h"
 
 namespace gl {
     class SpriteRenderer {
@@ -79,6 +79,8 @@ namespace gl {
 
         void setScale(float xScale, float yScale);
         void scale(float xScale, float yScale);
+
+        void setSize(float xSize, float ySize);
 
         virtual void render(const glm::mat4& windowModel) override;
         virtual void update(const gl::GameData& gameData) override {};

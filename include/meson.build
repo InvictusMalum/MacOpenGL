@@ -7,5 +7,6 @@ install_headers(
     'Sprite.hpp',
     'Texture.hpp',
     'Window.hpp',
+    'deps.h',
     subdir : 'glBase'
 )

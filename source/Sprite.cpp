@@ -1,12 +1,11 @@
 #include <Sprite.hpp>
 
 #include <glad/glad.h>
-#include <GLFW/glfw3.h>
+#include <GLFW/glfw.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <math.h>
 
-#include <iostream>
 namespace gl {
 
     SpriteRenderer::SpriteRenderer(Shader shader) :
@@ -107,6 +106,10 @@ namespace gl {
     }
     void Sprite::scale(float xScale, float yScale) {
         scale_ = {scale_[0]*xScale, scale_[1]*yScale};
+    }
+
+    void Sprite::setSize(float xSize, float ySize) {
+        size_ = {xSize, ySize};
     }
 
     void Sprite::render(const glm::mat4& projection) {

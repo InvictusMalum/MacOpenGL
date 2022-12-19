@@ -8,7 +8,7 @@ class EntityList;
 
 #include "Game.hpp"
 
-#include <deps.h>
+#include "deps.h"
 
 namespace gl {
     class Entity {

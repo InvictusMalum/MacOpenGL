@@ -18,6 +18,7 @@ namespace gl {
         ~ResourceManager() {clear();}
 
         Texture_base* loadTexture(Texture_base* texture, std::string name);
+        Texture_base* loadTexture(const char* path, bool alpha, std::string name);
         Texture_base* texture(std::string name) const;
 
         void clear();

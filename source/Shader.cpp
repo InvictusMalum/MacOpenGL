@@ -5,7 +5,7 @@
 #include <string>
 #include <sstream>
 
-#include <GLFW/glfw3.h>
+#include <GLFW/glfw.h>
 
 namespace gl {
 
