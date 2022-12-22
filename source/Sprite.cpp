@@ -15,13 +15,13 @@ namespace gl {
         unsigned int VBO;
         float vertices[] = { 
             // pos      // tex
-            -0.5f, 0.5f, 0.0f, 1.0f,
-            0.5f, -0.5f, 1.0f, 0.0f,
-            -0.5f, -0.5f, 0.0f, 0.0f, 
+            -0.5f, 0.5f, 0.0f, 0.0f,
+            0.5f, -0.5f, 1.0f, 1.0f,
+            -0.5f, -0.5f, 0.0f, 1.0f, 
         
-            -0.5f, 0.5f, 0.0f, 1.0f,
-            0.5f, 0.5f, 1.0f, 1.0f,
-            0.5f, -0.5f, 1.0f, 0.0f
+            -0.5f, 0.5f, 0.0f, 0.0f,
+            0.5f, 0.5f, 1.0f, 0.0f,
+            0.5f, -0.5f, 1.0f, 1.0f
         };
 
         glGenVertexArrays(1, &VAO_);
@@ -39,12 +39,12 @@ namespace gl {
 
     void SpriteRenderer::setTextureRange
             (float startU, float endU, float startV, float endV) {
-        textMap_ = {};
-        textMap_ = glm::translate(textMap_,
-                glm::vec3(startU, startV, 0.0f));
+        textMap_ = glm::mat4(1.0f);
         textMap_ = glm::scale(textMap_, 
                 glm::vec3(1/(endU-startU), 1/(endV-startV), 1.0f));
-
+        textMap_ = glm::translate(textMap_,
+                glm::vec3(10, -startV, 0.0f));
+        
     }
 
     void SpriteRenderer::render(glm::vec2 size, glm::vec2 position_,
