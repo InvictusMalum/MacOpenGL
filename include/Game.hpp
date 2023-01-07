@@ -116,7 +116,7 @@ namespace gl {
         template<typename T>
         bool deleteRenderer() {
             T* tmpRenderer = renderMap_[typeid(T)];
-            if (!tmpRenderer) return nullptr;
+            if (!tmpRenderer) return false;
             delete tmpRenderer;
             renderMap_.erase(typeid(T));
             return true;
@@ -129,7 +129,7 @@ namespace gl {
         template<typename T>
         bool deleteRenderer(T* renderer) {
             T* tmpRenderer = renderMap_[typeid(T)];
-            if (!tmpRenderer) return nullptr;
+            if (!tmpRenderer) return false;
             delete tmpRenderer;
             renderMap_.erase(typeid(T));
             return true;
