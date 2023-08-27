@@ -10,7 +10,6 @@
 namespace gl {
 
     Shader::Shader(const char* vertexPath, const char* fragmentPath) {
-        
         std::ifstream vertexFile(vertexPath);
         std::stringstream vertexStream;
         vertexStream << vertexFile.rdbuf();
@@ -68,13 +67,11 @@ namespace gl {
         unsigned int fragShader = compileFragmentShader(fragmentSource);
 
 
-
         id_ = glCreateProgram();
         glAttachShader(id_, vertShader);
         glAttachShader(id_, fragShader);
         glLinkProgram(id_);
 
-        
 
         int success;
         glGetProgramiv(id_, GL_LINK_STATUS, &success);
@@ -89,6 +86,8 @@ namespace gl {
 
         glDeleteShader(vertShader);
         glDeleteShader(fragShader);
+
+        return success;
     }
 
 

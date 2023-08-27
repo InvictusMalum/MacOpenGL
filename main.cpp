@@ -20,8 +20,7 @@ class SimpleSprite : public gl::Sprite {
     float speed = .05;
     float rotSpeed = .1;
 
-    static constexpr char *spriteFile = 
-            "sprites/test_sprite/sprite_square2.jpg";
+    static constexpr char *spriteFile = "sprites/test_sprite/sprite_square2.jpg";
 
     public:
     
@@ -106,7 +105,7 @@ class SimpleSprite : public gl::Sprite {
 };
 
 int main() {
-    gl::Game game(24, 800, 900, "gl Library Test", gl::WindowType::stretch_window);
+    gl::Game game(24, 800, 900, "Windows", gl::WindowType::stretch_window);
     
     SimpleSprite::initializeTextures(game.data());
     

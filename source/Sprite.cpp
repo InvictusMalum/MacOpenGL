@@ -11,6 +11,7 @@ namespace gl {
     SpriteRenderer::SpriteRenderer(Shader shader) :
         shader_(shader)
     {
+        std::cout << "starting sp render";
         // configure VAO/VBO
         unsigned int VBO;
         float vertices[] = { 

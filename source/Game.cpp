@@ -18,10 +18,12 @@ namespace gl {
         #endif
 
         window_ = new Window(this, windowType, gameWidth, gameHeight, windowTitle);
-
+        std::cout << "0";
         SpriteRenderer *spriteRenderer = new SpriteRenderer
             (Shader(SpriteRenderer::VERTEX_PATH, SpriteRenderer::FRAGMENT_PATH));
+        std::cout << "1";
         loadRenderer<SpriteRenderer>(spriteRenderer);
+        std::cout << "2";
 
     }
 

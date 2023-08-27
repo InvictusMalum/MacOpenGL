@@ -20,8 +20,8 @@ namespace gl {
 
         public:
 
-        static constexpr char* VERTEX_PATH = "shaders/sprite/sprite.vs";
-        static constexpr char* FRAGMENT_PATH = "shaders/sprite/sprite.frag";
+        static constexpr char* VERTEX_PATH = "shaders\\sprite\\sprite.vs";
+        static constexpr char* FRAGMENT_PATH = "shaders\\sprite\\sprite.frag";
 
         SpriteRenderer(Shader shader);
         ~SpriteRenderer();
